@@ -1,5 +1,6 @@
 export type TSchema = {
   title: string;
+  type: 'object';
   version?: string;
   id?: string;
   readOnly?: boolean;
@@ -9,7 +10,14 @@ export type TSchema = {
 };
 
 export type TPropertyType = 'string' | 'number' | 'boolean';
-export type TWidget = 'dropdown' | 'checkbox' | 'radio' | 'datepicker' | 'text';
+export type TWidgetType =
+  | 'select'
+  | 'checkbox'
+  | 'radio'
+  | 'datepicker'
+  | 'text'
+  | 'separator'
+  | 'heading';
 
 export type TSizeSm = 1 | 2 | 3 | 4 | 5 | 6;
 export type TSize = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
@@ -30,14 +38,17 @@ export type TProperties<T extends string = string> = Record<
 export type TProperty = {
   id: string;
   type: TPropertyType;
-  widget?: TWidget;
+  widget?: TWidgetType;
   maximum?: number;
   minimum?: number;
   placeholder?: string;
+  helperText?: string;
+  errorText?: string;
   default?: string | number | boolean;
   pattern?: string;
   view?: TView;
   enum?: string[];
+  hlevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 };
 
 export type TCondition = {
