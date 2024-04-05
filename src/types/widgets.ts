@@ -6,6 +6,7 @@ export type TWidgetProps = {
   required: boolean;
   readOnly: boolean;
   title: string;
+  className?: string;
 };
 
 export type TWidgetBase = {
