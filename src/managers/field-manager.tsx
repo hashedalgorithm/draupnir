@@ -1,21 +1,51 @@
-import { TWidgetProps } from '@/types/widgets';
 import React from 'react';
 import { useDraupnirRootContext } from '..';
+import { TWidgetProps } from '../types/widgets';
 
-const FieldManager = ({ property, ...props }: TWidgetProps) => {
-  const { widgets: Widgets } = useDraupnirRootContext();
+const FieldManager = (props: TWidgetProps) => {
+  const { widgets } = useDraupnirRootContext();
 
-  if (!Widgets) return <p>Invalid widgets!!</p>;
+  const { base } = widgets;
 
-  switch (property.type) {
-    case 'boolean':
-      return <p>booleam</p>;
+  switch (props.property.type) {
     case 'string':
-      return <p>booleam</p>;
+      return base.string ? (
+        <base.string {...props} />
+      ) : (
+        <input
+          type="string"
+          name={props.property?.id}
+          maxLength={props.property?.maximum}
+          minLength={props.property?.minimum}
+          defaultValue={(props.property?.default as string) ?? ''}
+          placeholder={props.property?.placeholder}
+        />
+      );
+    case 'boolean':
+      return base.boolean ? (
+        <base.boolean {...props} />
+      ) : (
+        <input
+          defaultChecked={!!props.property.default}
+          type="checkbox"
+          name={props.property.id}
+        />
+      );
     case 'number':
-      return <p>booleam</p>;
+      return base.number ? (
+        <base.number {...props} />
+      ) : (
+        <input
+          type="number"
+          name={props.property?.id}
+          max={props.property?.maximum}
+          min={props.property?.minimum}
+          defaultValue={(props.property?.default as string) ?? ''}
+          placeholder={props.property?.placeholder}
+        />
+      );
     default:
-      return <p>default</p>;
+      return <p>Unknown widget</p>;
   }
 };
 
