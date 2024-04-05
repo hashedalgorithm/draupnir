@@ -1,25 +1,87 @@
-import { TWidgetProps } from '@/types/widgets';
 import React from 'react';
 import { useDraupnirRootContext } from '..';
+import { TWidgetProps } from '../types/widgets';
 
 const WidgetManager = (props: TWidgetProps) => {
-  const { widgets: Widgets } = useDraupnirRootContext();
+  const { widgets } = useDraupnirRootContext();
 
-  if (!Widgets) return <p>Invalid widgets</p>;
+  const { custom } = widgets;
 
   switch (props.property.widget) {
     case 'text':
-      return <Widgets.custom.text {...props} /> ?? <textarea></textarea>;
+      return custom?.text ? (
+        <custom.text {...props} />
+      ) : (
+        <textarea
+          name={props.property.id}
+          readOnly={props?.readOnly}
+          required={props?.required}
+          placeholder={props.property?.placeholder}
+          defaultValue={props.property?.default as string}
+          maxLength={props.property?.maximum}
+          minLength={props.property?.minimum}
+        ></textarea>
+      );
     case 'checkbox':
-      return (
-        <Widgets.custom.checkbox {...props} /> ?? <input type="checkbox" />
+      return custom?.checkbox ? (
+        <custom.checkbox {...props} />
+      ) : (
+        <input
+          type="checkbox"
+          name={props.property.id}
+          readOnly={props?.readOnly}
+          required={props?.required}
+          defaultChecked={!!props.property?.default}
+        />
       );
     case 'datepicker':
-      return <Widgets.custom.datepicker {...props} /> ?? <input type="date" />;
+      return custom?.datepicker ? (
+        <custom.datepicker {...props} />
+      ) : (
+        <input
+          type="date"
+          name={props.property.id}
+          readOnly={props?.readOnly}
+          required={props?.required}
+          placeholder={props.property?.placeholder}
+          defaultValue={props.property?.default as string}
+        />
+      );
     case 'select':
-      return <Widgets.custom.select {...props} /> ?? <select></select>;
+      return custom?.select ? (
+        <custom.select {...props} />
+      ) : (
+        <select name={props.property.id} required={props?.required}>
+          {props.property?.enum &&
+            props.property.enum.map((item, index) => (
+              <option
+                key={`widgetmanager.select.defaultselect.option.${props.property.id}.${index}`}
+                value={item}
+              >
+                {item}
+              </option>
+            ))}
+        </select>
+      );
     case 'radio':
-      return <Widgets.custom.radio {...props} /> ?? <input type="radio" />;
+      return custom?.radio ? (
+        <custom.radio {...props} />
+      ) : (
+        <>
+          {props.property?.enum &&
+            props.property.enum.map((item, index) => (
+              <input
+                key={`widgetmanager.radio.defaultradio.${props.property.id}.${index}`}
+                type="radio"
+                defaultChecked={!!props.property.default}
+                name={props.property.id}
+                readOnly={props?.readOnly}
+                required={props?.required}
+                value={item}
+              />
+            ))}
+        </>
+      );
     default:
       return <p>Unknown widget</p>;
   }
