@@ -1,8 +1,9 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { DraupnirRoot, DraupnirProvider } from '../dist';
-import { TSchema } from '../dist/types/schema';
+import { DraupnirRoot, DraupnirProvider, TSchema } from '../dist';
+import "./index.css"
+
 import "../dist/index"
 
 const App = () => {
@@ -13,11 +14,24 @@ const App = () => {
     properties: {
       fname: {
         id: "fname",
-        type: "string"
+        type: "string",
+        minimum: 10,
       },
       lname: {
         id: "lname",
         type: "string"
+      },
+      age: {
+        id: "age",
+        type: "number",
+        maximum: 50,
+        minimum: 0
+      },
+      salu: {
+        id: "salu",
+        type: "boolean",
+        widget: "radio",
+        enum: ["mr.", "mrs.", "ms."]
       },
       gender: {
         id: "gender",
@@ -36,18 +50,17 @@ const App = () => {
   } satisfies TSchema
 
   return (
-    <div>
-      <DraupnirRoot
-        
+    <form>
+      <DraupnirRoot className=''  
         widgets={{
           base: {},
           nonreactive: {},
           custom: {},
         }}
       >
-        <DraupnirProvider schema={schema}></DraupnirProvider>
+        <DraupnirProvider schema={schema} id='' onSubmit={() => { }} ></DraupnirProvider>
       </DraupnirRoot>
-    </div>
+    </form>
   );
 };
 

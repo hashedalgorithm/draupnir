@@ -4,11 +4,15 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "parcel index.html --no-cache",
-    "build": "parcel build index.html"
+    "start": "parcel index.html --no-cache && yarn build-tailwind",
+    "build": "parcel build index.html",
+    "build-tailwind": "NODE_ENV=production yarn tailwindcss -o ./dist/index.css --minify"
   },
   "dependencies": {
-    "react-app-polyfill": "^1.0.0"
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "react-app-polyfill": "^1.0.0",
+    "tailwindcss": "^3.4.3"
   },
   "alias": {
     "react": "../node_modules/react",
@@ -18,7 +22,8 @@
   "devDependencies": {
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.8.4",
-    "parcel": "1.12.3",
+    "parcel": "2.0.0",
     "typescript": "^3.4.5"
-  }
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead"
 }
