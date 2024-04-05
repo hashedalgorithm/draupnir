@@ -9,19 +9,19 @@ export type TWidgetProps = {
 };
 
 export type TWidgetBase = {
-  [K in TPropertyType]: FC<TWidgetProps>;
+  [K in TPropertyType]?: FC<TWidgetProps>;
 };
 
-export type TWidgetAdvance = {
-  [K in Exclude<TWidgetType, 'separator' | 'heading'>]: FC<TWidgetProps>;
+export type TWidgetCustom = {
+  [K in Exclude<TWidgetType, 'separator' | 'heading'>]?: FC<TWidgetProps>;
 };
 
 export type TWidgetNonReactive = {
-  [K in Extract<TWidgetType, 'separator' | 'heading'>]: FC<TWidgetProps>;
+  [K in Extract<TWidgetType, 'separator' | 'heading'>]?: FC<TWidgetProps>;
 };
 
 export type TWidget = {
   base: TWidgetBase;
-  custom: TWidgetAdvance;
+  custom: TWidgetCustom;
   nonreactive: TWidgetNonReactive;
 };
