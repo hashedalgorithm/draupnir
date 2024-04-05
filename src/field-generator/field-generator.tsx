@@ -1,7 +1,6 @@
-import { FieldManager } from '@/managers/field-manager';
-import { WidgetManager } from '@/managers/widget-manager';
-import { TProperties } from '@/types/schema';
 import React from 'react';
+import { FieldManager, WidgetManager } from '../managers';
+import { TProperties } from '../types/schema';
 
 type FieldGeneratorProps = {
   properties: TProperties;
