@@ -1,8 +1,10 @@
 import React, { PropsWithChildren, createContext, useContext } from 'react';
 import { TWidget } from '../types/widgets';
+import '../index.module.css';
 
 type DraupnirRootProps = PropsWithChildren<{
   widgets: TWidget;
+  className: string;
 }>;
 
 type DraupnirRootState = {
@@ -19,17 +21,10 @@ const RawContext = createContext<DraupnirRootState>({
 
 const useDraupnirRootContext = () => useContext(RawContext);
 
-const DraupnirRoot = ({ children, widgets }: DraupnirRootProps) => {
-  if (!widgets) return <p>Invalid Widgets initialization!</p>;
-
+const DraupnirRoot = ({ children, widgets, className }: DraupnirRootProps) => {
   return (
     <RawContext.Provider value={{ widgets }}>
-      <section
-        key={`draupnir.root.${'store'}`}
-        className="grid sm:grid-cols-6 grid-cols-12"
-      >
-        {children}
-      </section>
+      <section className={className}>{children}</section>
     </RawContext.Provider>
   );
 };
