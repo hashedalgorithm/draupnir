@@ -1,6 +1,5 @@
 import React, { PropsWithChildren, createContext, useContext } from 'react';
 import { TWidget } from '../types/widgets';
-import '../index.module.css';
 
 type DraupnirRootProps = PropsWithChildren<{
   widgets: TWidget;
