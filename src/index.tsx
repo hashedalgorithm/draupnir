@@ -1,3 +1,4 @@
 import './index.css';
 
-export * from './components/sample';
+export * from './draupnir-root';
+export * from './draupnir-provider';
