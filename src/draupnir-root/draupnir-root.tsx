@@ -1,15 +1,21 @@
-import { TWidget } from '@/types/widgets';
 import React, { PropsWithChildren, createContext, useContext } from 'react';
+import { TWidget } from '../types/widgets';
 
 type DraupnirRootProps = PropsWithChildren<{
-  widgets: TWidget | null;
+  widgets: TWidget;
 }>;
 
 type DraupnirRootState = {
-  widgets: TWidget | null;
+  widgets: TWidget;
 };
 
-const RawContext = createContext<DraupnirRootState>({ widgets: null });
+const RawContext = createContext<DraupnirRootState>({
+  widgets: {
+    base: {},
+    custom: {},
+    nonreactive: {},
+  },
+});
 
 const useDraupnirRootContext = () => useContext(RawContext);
 
