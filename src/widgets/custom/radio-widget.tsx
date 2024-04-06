@@ -8,9 +8,11 @@ const RadioWidget: FC<TWidgetProps> = props => {
     <div className="flex flex-col gap-2">
       {props.property?.enum &&
         props.property.enum.map((item, index) => (
-          <div className="flex items-center gap-4">
+          <div
+            className="flex items-center gap-4"
+            key={`radio-widget.radio.defaultradio.${props.property.id}.${item}.${index}`}
+          >
             <input
-              key={`radio-widget.radio.defaultradio.${props.property.id}.${index}`}
               type="radio"
               defaultChecked={!!props.property.default}
               name={props.property?.location ?? props.property.id}

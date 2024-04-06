@@ -5,14 +5,20 @@ import { TProperties } from '../types/schema';
 type FieldGeneratorProps = {
   properties: TProperties;
 };
-const FieldGenerator = ({ properties, ...props }: FieldGeneratorProps) => {
+const FieldGenerator = ({ properties }: FieldGeneratorProps) => {
   return (
     <>
       {Object.values(properties).map(property => {
         return property?.widget ? (
-          <WidgetManager property={property} {...props} />
+          <WidgetManager
+            key={`fieldgenerator.property.widgetmanager.${property}`}
+            property={property}
+          />
         ) : (
-          <FieldManager property={property} {...props} />
+          <FieldManager
+            key={`fieldgenerator.property.fieldmanager.${property}`}
+            property={property}
+          />
         );
       })}
     </>
