@@ -28,8 +28,8 @@ const DraupnirProvider = ({
   const addStringValidators = useCallback((property: TProperty) => {
     let zod = z.string({
       description: property?.helperText,
-      invalid_type_error: `${property.label ?? property.id} should be a string`,
-      required_error: `${property.label ?? property.id} is required!`,
+      invalid_type_error: `${sentenceCase(property.label ?? property.id)} should be a string`,
+      required_error: `${sentenceCase(property.label ?? property.id)} is required!`,
     });
 
     if (property?.readOnly) return zod.readonly();
@@ -57,8 +57,8 @@ const DraupnirProvider = ({
   const addNumberValidators = useCallback((property: TProperty) => {
     let zod = z.number({
       description: property?.helperText,
-      invalid_type_error: `${property.label ?? property.id} should be a number`,
-      required_error: `${property.label ?? property.id} is required!`,
+      invalid_type_error: `${sentenceCase(property.label ?? property.id)} should be a number`,
+      required_error: `${sentenceCase(property.label ?? property.id)} is required!`,
     });
 
     if (property?.readOnly) return zod.readonly();
@@ -83,8 +83,8 @@ const DraupnirProvider = ({
   const addBooleanValidators = useCallback((property: TProperty) => {
     let zod = z.boolean({
       description: property?.helperText,
-      invalid_type_error: `${property.label ?? property} should be a boolean`,
-      required_error: `${property.label ?? property} is required!`,
+      invalid_type_error: `${sentenceCase(property.label ?? property.id)} should be a boolean`,
+      required_error: `${sentenceCase(property.label ?? property.id)} is required!`,
     });
 
     if (property?.readOnly) return zod.readonly();
