@@ -6,6 +6,14 @@ module.exports = {
   darkMode: ['class'],
   theme: {
     extend: {
+      screens: {
+        sm: { max: '600px' },
+        md: { min: '601px', max: '767px' },
+        lg: { min: '768px', max: '991px' },
+        xl: { min: '992px', max: '1199px' },
+        xxl: { min: '1200px', max: '1500px' },
+        wide: { min: '1500px' },
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
