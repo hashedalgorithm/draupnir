@@ -6,7 +6,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from './ui/form';
+} from '../components/ui/form';
 import { useFormContext } from 'react-hook-form';
 import { TProperty, TWidgetProps } from '../types';
 

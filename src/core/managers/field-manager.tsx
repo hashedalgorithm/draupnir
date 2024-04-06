@@ -1,9 +1,9 @@
 import React from 'react';
-import { useDraupnirRootContext } from '..';
-import DraupnirNode from '../components/draupnir-node';
-import UnknownDraupnirNode from '../components/unknown-draupnir-node';
-import { TWidgetProps } from '../types/widgets';
-import { BooleanWidget, NumberWidget, StringWidget } from '../widgets';
+import { useDraupnirRootContext } from '../..';
+import DraupnirNode from '../draupnir-node';
+import UnknownDraupnirNode from '../unknown-draupnir-node';
+import { TWidgetProps } from '../../types/widgets';
+import { BooleanWidget, NumberWidget, StringWidget } from '../../widgets';
 
 const FieldManager = (props: TWidgetProps) => {
   const {

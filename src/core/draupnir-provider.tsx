@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { ZodBoolean, ZodNumber, ZodString, z } from 'zod';
 import { Form } from '../components/ui/form';
-import { FieldGenerator } from '../field-generator';
+import { FieldGenerator } from './field-generator';
 import { TProperty, TSchema } from '../types/schema';
 import { cn } from '../lib/tw-util';
 

@@ -1,6 +1,6 @@
 import { RocketIcon } from '@radix-ui/react-icons';
 import React from 'react';
-import { Alert, AlertTitle } from './ui/alert';
+import { Alert, AlertTitle } from '../components/ui/alert';
 
 const UnknownDraupnirNode = () => {
   return (
