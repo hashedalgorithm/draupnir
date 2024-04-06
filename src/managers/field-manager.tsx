@@ -1,11 +1,9 @@
 import React from 'react';
 import { useDraupnirRootContext } from '..';
-import { TWidgetProps } from '../types/widgets';
-import { StringWidget } from '../widgets/string-widget';
 import DraupnirNode from '../components/draupnir-node';
-import BooleanWidget from '../widgets/boolean-widget';
-import NumberWidget from '../widgets/number-widget';
 import UnknownDraupnirNode from '../components/unknown-draupnir-node';
+import { TWidgetProps } from '../types/widgets';
+import { BooleanWidget, NumberWidget, StringWidget } from '../widgets';
 
 const FieldManager = (props: TWidgetProps) => {
   const {
