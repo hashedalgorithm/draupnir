@@ -68,19 +68,37 @@ const DraupnirProvider = ({ schema, ...props }: DraupnirProviderProps) => {
         switch (schema.properties[key].type) {
           case 'string':
             zods[key] = addStringValidators(
-              z.string(),
+              z.string({
+                description: schema.properties[key]?.helperText,
+                invalid_type_error: `${schema.properties[key].label ??
+                  key} should be a string`,
+                required_error: `${schema.properties[key].label ??
+                  key} is required!`,
+              }),
               schema.properties[key] as TProperty
             );
             break;
           case 'number':
             zods[key] = addNumberValidators(
-              z.number(),
+              z.number({
+                description: schema.properties[key]?.helperText,
+                invalid_type_error: `${schema.properties[key].label ??
+                  key} should be a number`,
+                required_error: `${schema.properties[key].label ??
+                  key} is required!`,
+              }),
               schema.properties[key] as TProperty
             );
             break;
           case 'boolean':
             zods[key] = addBooleanValidators(
-              z.boolean(),
+              z.boolean({
+                description: schema.properties[key]?.helperText,
+                invalid_type_error: `${schema.properties[key].label ??
+                  key} should be a boolean`,
+                required_error: `${schema.properties[key].label ??
+                  key} is required!`,
+              }),
               schema.properties[key] as TProperty
             );
             break;
