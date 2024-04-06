@@ -1,11 +1,8 @@
 export type TSchema = {
   title: string;
-  type: 'object';
   version?: string;
-  id?: string;
   readOnly?: boolean;
   properties: TProperties;
-  required: string[];
   conditions: TCondition[];
 };
 
@@ -14,6 +11,8 @@ export type TWidgetType =
   | 'select'
   | 'checkbox'
   | 'radio'
+  | 'email'
+  | 'url'
   | 'datepicker'
   | 'text'
   | 'separator'
@@ -30,10 +29,7 @@ export type TView = {
   wide?: TSize;
 };
 
-export type TProperties<T extends string = string> = Record<
-  T,
-  TProperty | TSchema
->;
+export type TProperties<T extends string = string> = Record<T, TProperty>;
 
 export type TProperty = {
   id: string;
@@ -42,13 +38,19 @@ export type TProperty = {
   maximum?: number;
   minimum?: number;
   placeholder?: string;
+  label?: string;
+  location?: string;
   helperText?: string;
+  required?: boolean;
+  readOnly?: boolean;
   errorText?: string;
   default?: string | number | boolean;
   pattern?: string;
   view?: TView;
+  disabled?: boolean;
   enum?: string[];
   hlevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  step?: number;
 };
 
 export type TCondition = {
