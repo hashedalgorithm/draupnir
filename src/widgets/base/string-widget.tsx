@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { TWidgetProps } from '../../types/widgets';
 import { Input } from '../../components/ui/input';
 import { cn } from '../../lib/tw-util';
 
-const StringWidget = (props: TWidgetProps) => {
+const StringWidget: FC<TWidgetProps> = props => {
   return (
     <Input
       {...props.field}
