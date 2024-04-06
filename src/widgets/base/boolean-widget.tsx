@@ -18,7 +18,7 @@ const BooleanWidget: FC<TWidgetProps> = props => {
         htmlFor={props.property.id}
         aria-disabled={props.property?.disabled}
       >
-        Airplane Mode
+        {props.field?.name}
       </Label>
     </div>
   );
