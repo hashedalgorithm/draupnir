@@ -9,7 +9,6 @@ import React, {
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Form } from '../components/ui/form';
-import { cn } from '../lib/tw-util';
 import { TProperty, TSchema } from '../types/schema';
 import { FieldGenerator } from './field-generator';
 
@@ -153,7 +152,7 @@ const DraupnirProvider = ({
     <Form {...formProps}>
       <form
         onSubmit={formProps.handleSubmit(onSubmit)}
-        className={cn('space-y-3', props?.className)}
+        className={props?.className}
       >
         <FieldGenerator
           key={`root.fieldgenerator.${schema.title.toLowerCase()}`}
