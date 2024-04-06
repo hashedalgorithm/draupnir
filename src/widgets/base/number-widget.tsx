@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import { TWidgetProps } from '../types';
-import { Input } from '../components/ui/input';
-import { cn } from '../lib/tw-util';
+import { TWidgetProps } from '../../types';
+import { Input } from '../../components/ui/input';
+import { cn } from '../../lib/tw-util';
 
 const NumberWidget: FC<TWidgetProps> = props => {
   return (
@@ -20,4 +20,4 @@ const NumberWidget: FC<TWidgetProps> = props => {
   );
 };
 
-export default NumberWidget;
+export { NumberWidget };

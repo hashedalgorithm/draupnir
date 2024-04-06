@@ -1,7 +1,7 @@
 import React from 'react';
-import { TWidgetProps } from '../types/widgets';
-import { Input } from '../components/ui/input';
-import { cn } from '../lib/tw-util';
+import { TWidgetProps } from '../../types/widgets';
+import { Input } from '../../components/ui/input';
+import { cn } from '../../lib/tw-util';
 
 const StringWidget = (props: TWidgetProps) => {
   return (

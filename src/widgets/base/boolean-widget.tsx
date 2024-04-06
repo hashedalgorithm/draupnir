@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import { TWidgetProps } from '../types';
-import { Switch } from '../components/ui/switch';
-import { Label } from '../components/ui/label';
-import { cn } from '../lib/tw-util';
+import { TWidgetProps } from '../../types';
+import { Switch } from '../../components/ui/switch';
+import { Label } from '../../components/ui/label';
+import { cn } from '../../lib/tw-util';
 
 const BooleanWidget: FC<TWidgetProps> = props => {
   return (
@@ -24,4 +24,4 @@ const BooleanWidget: FC<TWidgetProps> = props => {
   );
 };
 
-export default BooleanWidget;
+export { BooleanWidget };
