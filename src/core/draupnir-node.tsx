@@ -23,7 +23,8 @@ const DraupnirNode = ({ property, widget: Widget }: DraupnirNodeProps) => {
       name={property?.location ?? property.id}
       render={({ field, fieldState, formState }) => (
         <FormItem>
-          {property.type !== 'boolean' && (
+          {(property.type !== 'boolean' ||
+            (property?.type === 'boolean' && property?.widget === 'radio')) && (
             <FormLabel>
               {sentenceCase(property?.label ?? property.id)}
             </FormLabel>
