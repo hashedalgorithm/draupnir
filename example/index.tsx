@@ -4,22 +4,57 @@ import * as ReactDOM from 'react-dom';
 import { DraupnirRoot, DraupnirProvider, TSchema } from '../dist';
 import "./index.css"
 
-import "../dist/index"
-
 const App = () => {
   const schema = {
     title: "Sample",
-    id: 'sample',
+    version: "0.1",
     conditions: [],
     properties: {
+      title: {
+        id: "title",
+        type: "string",
+        widget: "heading",
+        hlevel: "h2",
+        label: "Personal Details Form"
+      },
       fname: {
         id: "fname",
         type: "string",
         minimum: 10,
+        maximum: 20,
+        required: true,
+        label: "First Name",
+        errorText: "Enter valid firstname",
+        view: {
+          lg: 6,
+          xl: 4,
+          xxl: 4, 
+          wide: 4
+        }
       },
       lname: {
         id: "lname",
-        type: "string"
+        type: "string",
+        label: "Last Name",
+        view: {
+          lg: 6,
+          xl: 4,
+          xxl: 4, 
+          wide: 4
+        }
+      },
+      fullname: {
+        id: "fullname",
+        type: "string",
+        label: "Full Name",
+        maximum: 20,
+        minimum: 5,
+        view: {
+          lg: 12,
+          xl: 4,
+          xxl: 4, 
+          wide: 4
+        }
       },
       age: {
         id: "age",
@@ -29,39 +64,47 @@ const App = () => {
       },
       salu: {
         id: "salu",
-        type: "boolean",
+        type: "string",
         widget: "radio",
-        enum: ["mr.", "mrs.", "ms."]
+        enum: ["mr.", "mrs.", "ms."],
+        default: "mr."
       },
       gender: {
         id: "gender",
         type: "string",
         widget: 'select',
-        enum: ['male', 'female', "others"]
+        enum: ['male', 'female', "others"],
+        default: "male"
       },
       isAgree: {
         id: "isAgree",
         type: "boolean",
+        required: true
+      },
+      separator: {
+        id: "separator",
+        type: "string",
+        widget: "separator"
       }
     },
-    required: ["fname"],
-    type: "object",
-    version: "0.1"
-  } satisfies TSchema
+  } satisfies TSchema;
+
 
   return (
-    <form>
-      <DraupnirRoot className=''  
+      <DraupnirRoot className='px-8 py-4'  
         widgets={{
           base: {},
           nonreactive: {},
           custom: {},
         }}
       >
-        <DraupnirProvider schema={schema} id='' onSubmit={() => { }} ></DraupnirProvider>
+      <DraupnirProvider mode='all' className='grid grid-cols-12 gap-4' schema={schema} onSubmit={(val) => { 
+        console.log(val, "onsubmit")
+      }} onChange={(val) => { console.log(val) }} >
+        <button type='submit'>submit</button>
+      </DraupnirProvider>
       </DraupnirRoot>
-    </form>
-  );
+      );
 };
 
 ReactDOM.render(<App />, document.getElementById('root'));
