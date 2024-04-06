@@ -154,11 +154,13 @@ const DraupnirNode = ({
           )}
         >
           {(property.type !== 'boolean' ||
-            (property?.type === 'boolean' && property?.widget === 'radio')) && (
-            <FormLabel>
-              {sentenceCase(property?.label ?? property.id)}
-            </FormLabel>
-          )}
+            (property?.type === 'boolean' && property?.widget === 'radio')) &&
+            property?.widget !== 'separator' &&
+            property?.widget !== 'heading' && (
+              <FormLabel>
+                {sentenceCase(property?.label ?? property.id)}
+              </FormLabel>
+            )}
           <FormControl>
             <Widget
               property={property}
