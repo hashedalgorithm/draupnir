@@ -11,11 +11,7 @@ import { sentenceCase } from 'change-case';
 
 const SelectWidget: FC<TWidgetProps> = props => {
   return (
-    <Select
-      required={props.property.required}
-      disabled={props.property.disabled}
-      defaultValue={props.property?.default as string}
-    >
+    <Select {...props.field} onValueChange={props.field?.onChange}>
       <SelectTrigger name={props.property?.location ?? props.property?.id}>
         <SelectValue placeholder={props.property.placeholder} />
       </SelectTrigger>

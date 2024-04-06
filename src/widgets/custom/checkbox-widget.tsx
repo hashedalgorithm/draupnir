@@ -7,12 +7,11 @@ const CheckboxWidget: FC<TWidgetProps> = props => {
   return (
     <div className="flex gap-4 items-center">
       <input
+        {...props.field}
         type="checkbox"
-        name={props.property.id}
-        readOnly={props?.property.readOnly}
-        required={props?.property.required}
-        defaultChecked={!!props.property?.default}
-        disabled={props.property.disabled}
+        checked={props.field?.value}
+        onChange={props.field?.onChange}
+        onBlur={props.field?.onBlur}
         className="w-4 h-4 accent-primary"
       />
       <Label>{sentenceCase(props.property?.label ?? props.property.id)}</Label>

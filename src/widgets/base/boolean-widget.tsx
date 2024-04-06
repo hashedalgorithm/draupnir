@@ -9,14 +9,12 @@ const BooleanWidget: FC<TWidgetProps> = props => {
   return (
     <div className={cn('flex items-center space-x-2 w-full', props?.className)}>
       <Switch
-        id={`boolean.widget.${props.property.id}`}
-        defaultChecked={!!props.property.default}
-        required={props.property?.required}
-        name={props.property?.location ?? props.property?.id}
-        disabled={props.property?.disabled}
+        {...props.field}
+        checked={props.field?.value}
+        onCheckedChange={props.field?.onChange}
       />
       <Label
-        htmlFor={`boolean.widget.${props.property.id}`}
+        htmlFor={props.property.id}
         aria-disabled={props.property?.disabled}
       >
         {sentenceCase(props.property?.label ?? props.property.id)}
