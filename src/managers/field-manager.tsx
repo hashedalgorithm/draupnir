@@ -1,51 +1,41 @@
 import React from 'react';
 import { useDraupnirRootContext } from '..';
 import { TWidgetProps } from '../types/widgets';
+import { StringWidget } from '../widgets/string-widget';
+import DraupnirNode from '../components/draupnir-node';
+import BooleanWidget from '../widgets/boolean-widget';
+import NumberWidget from '../widgets/number-widget';
+import UnknownDraupnirNode from '../components/unknown-draupnir-node';
 
 const FieldManager = (props: TWidgetProps) => {
-  const { widgets } = useDraupnirRootContext();
-
-  const { base } = widgets;
+  const {
+    widgets: { base },
+  } = useDraupnirRootContext();
 
   switch (props.property.type) {
     case 'string':
-      return base.string ? (
-        <base.string {...props} />
-      ) : (
-        <input
-          type="string"
-          name={props.property?.id}
-          maxLength={props.property?.maximum}
-          minLength={props.property?.minimum}
-          defaultValue={(props.property?.default as string) ?? ''}
-          placeholder={props.property?.placeholder}
+      return (
+        <DraupnirNode
+          widget={base?.string ?? StringWidget}
+          property={props.property}
         />
       );
     case 'boolean':
-      return base.boolean ? (
-        <base.boolean {...props} />
-      ) : (
-        <input
-          defaultChecked={!!props.property.default}
-          type="checkbox"
-          name={props.property.id}
+      return (
+        <DraupnirNode
+          widget={base?.boolean ?? BooleanWidget}
+          property={props.property}
         />
       );
     case 'number':
-      return base.number ? (
-        <base.number {...props} />
-      ) : (
-        <input
-          type="number"
-          name={props.property?.id}
-          max={props.property?.maximum}
-          min={props.property?.minimum}
-          defaultValue={(props.property?.default as string) ?? ''}
-          placeholder={props.property?.placeholder}
+      return (
+        <DraupnirNode
+          widget={base?.number ?? NumberWidget}
+          property={props.property}
         />
       );
     default:
-      return <p>Unknown widget</p>;
+      return <UnknownDraupnirNode />;
   }
 };
 
