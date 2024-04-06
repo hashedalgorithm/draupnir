@@ -4,7 +4,7 @@ import { Alert, AlertTitle } from './ui/alert';
 
 const UnknownDraupnirNode = () => {
   return (
-    <Alert>
+    <Alert variant="default">
       <RocketIcon className="h-4 w-4" />
       <AlertTitle>Unknown Widget!</AlertTitle>
     </Alert>
