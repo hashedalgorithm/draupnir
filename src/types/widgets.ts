@@ -1,9 +1,18 @@
 import { FC } from 'react';
 import { TProperty, TPropertyType, TWidgetType } from './schema';
+import {
+  ControllerFieldState,
+  ControllerRenderProps,
+  FieldValues,
+  UseFormStateReturn,
+} from 'react-hook-form';
 
 export type TWidgetProps<T = unknown> = T & {
   property: TProperty;
   className?: string;
+  field?: ControllerRenderProps<FieldValues, string>;
+  fieldState?: ControllerFieldState;
+  formState?: UseFormStateReturn<FieldValues>;
 };
 
 export type TWidgetBase = {

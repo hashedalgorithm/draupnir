@@ -20,11 +20,16 @@ const DraupnirNode = ({ property, widget: Widget }: DraupnirNodeProps) => {
     <FormField
       control={control}
       name={property?.location ?? property.id}
-      render={({ field }) => (
+      render={({ field, fieldState, formState }) => (
         <FormItem>
-          <FormLabel>{property?.label ?? property.id}</FormLabel>
+          <FormLabel>{field.name}</FormLabel>
           <FormControl>
-            <Widget property={property} />
+            <Widget
+              property={property}
+              field={field}
+              fieldState={fieldState}
+              formState={formState}
+            />
           </FormControl>
           {property?.helperText && (
             <FormDescription>{property.helperText}</FormDescription>
