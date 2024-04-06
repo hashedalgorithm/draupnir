@@ -6,7 +6,6 @@ import { sentenceCase } from 'change-case';
 const RadioWidget: FC<TWidgetProps> = props => {
   return (
     <div className="flex flex-col gap-2">
-      <Label>{sentenceCase(props.property?.label ?? props.property.id)}</Label>
       {props.property?.enum &&
         props.property.enum.map((item, index) => (
           <div
