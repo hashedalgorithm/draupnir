@@ -8,12 +8,15 @@ import {
   RadioWidget,
   SelectWidget,
   TextareaWidget,
+  SeparatorWidget,
+  HeadingWidget,
+  StringWidget,
 } from '../../widgets';
 import { useDraupnirRootContext } from '../draupnir-root';
 
 const WidgetManager = (props: TWidgetProps) => {
   const {
-    widgets: { custom },
+    widgets: { base, custom, nonreactive },
   } = useDraupnirRootContext();
 
   switch (props.property.widget) {
@@ -54,6 +57,38 @@ const WidgetManager = (props: TWidgetProps) => {
         <DraupnirNode
           property={props.property}
           widget={custom?.radio ?? RadioWidget}
+        />
+      );
+
+    case 'separator':
+      return (
+        <DraupnirNode
+          property={props.property}
+          widget={nonreactive?.separator ?? SeparatorWidget}
+        />
+      );
+
+    case 'heading':
+      return (
+        <DraupnirNode
+          property={props.property}
+          widget={nonreactive?.heading ?? HeadingWidget}
+        />
+      );
+
+    case 'email':
+      return (
+        <DraupnirNode
+          property={props.property}
+          widget={base?.string ?? StringWidget}
+        />
+      );
+
+    case 'url':
+      return (
+        <DraupnirNode
+          property={props.property}
+          widget={base?.string ?? StringWidget}
         />
       );
 
