@@ -177,6 +177,8 @@ const DatePickerWidget: FC<TWidgetProps> = props => {
       required={props?.property.required}
       placeholder={props.property?.placeholder}
       defaultValue={props.property?.default as string}
+      disabled={props.property?.disabled}
+      pattern={props.property?.pattern}
     />
   );
 };

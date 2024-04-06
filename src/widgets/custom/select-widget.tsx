@@ -10,11 +10,12 @@ import { TWidgetProps } from '../../types';
 
 const SelectWidget: FC<TWidgetProps> = props => {
   return (
-    <Select>
-      <SelectTrigger
-        name={props.property?.location ?? props.property?.id}
-        defaultValue={props.property?.default as string}
-      >
+    <Select
+      required={props.property.required}
+      disabled={props.property.disabled}
+      defaultValue={props.property?.default as string}
+    >
+      <SelectTrigger name={props.property?.location ?? props.property?.id}>
         <SelectValue placeholder={props.property.placeholder} />
       </SelectTrigger>
       <SelectContent>

@@ -14,6 +14,7 @@ const TextareaWidget: FC<TWidgetProps> = props => {
       required={props.property?.required}
       readOnly={props.property?.readOnly}
       className={cn(props?.className)}
+      disabled={props.property.disabled}
     />
   );
 };

@@ -15,6 +15,8 @@ const StringWidget = (props: TWidgetProps) => {
       required={props.property?.required}
       readOnly={props.property?.readOnly}
       className={cn(props?.className)}
+      pattern={props.property?.pattern}
+      disabled={props.property.disabled}
     />
   );
 };

@@ -16,6 +16,8 @@ const NumberWidget: FC<TWidgetProps> = props => {
       readOnly={props.property?.readOnly}
       className={cn(props?.className)}
       step={props.property?.step}
+      pattern={props.property?.pattern}
+      disabled={props.property.disabled}
     />
   );
 };

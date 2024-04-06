@@ -9,6 +9,7 @@ import {
 } from '../components/ui/form';
 import { useFormContext } from 'react-hook-form';
 import { TProperty, TWidgetProps } from '../types';
+import { sentenceCase } from 'change-case';
 
 type DraupnirNodeProps = {
   property: TProperty;
@@ -22,7 +23,11 @@ const DraupnirNode = ({ property, widget: Widget }: DraupnirNodeProps) => {
       name={property?.location ?? property.id}
       render={({ field, fieldState, formState }) => (
         <FormItem>
-          {property.type !== 'boolean' && <FormLabel>{field.name}</FormLabel>}
+          {property.type !== 'boolean' && (
+            <FormLabel>
+              {sentenceCase(property?.label ?? property.id)}
+            </FormLabel>
+          )}
           <FormControl>
             <Widget
               property={property}
