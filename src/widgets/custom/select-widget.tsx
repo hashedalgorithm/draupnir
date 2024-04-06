@@ -7,6 +7,7 @@ import {
   SelectValue,
 } from '../../components/ui/select';
 import { TWidgetProps } from '../../types';
+import { sentenceCase } from 'change-case';
 
 const SelectWidget: FC<TWidgetProps> = props => {
   return (
@@ -25,7 +26,7 @@ const SelectWidget: FC<TWidgetProps> = props => {
               key={`widgetmanager.select.defaultselect.option.${props.property.id}.${index}`}
               value={item}
             >
-              {item}
+              {sentenceCase(item)}
             </SelectItem>
           ))}
       </SelectContent>
