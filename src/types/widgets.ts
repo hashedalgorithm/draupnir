@@ -1,11 +1,8 @@
 import { FC } from 'react';
 import { TProperty, TPropertyType, TWidgetType } from './schema';
 
-export type TWidgetProps = {
+export type TWidgetProps<T = unknown> = T & {
   property: TProperty;
-  required: boolean;
-  readOnly: boolean;
-  title: string;
   className?: string;
 };
 
