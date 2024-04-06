@@ -14,7 +14,9 @@ const CheckboxWidget: FC<TWidgetProps> = props => {
         onBlur={props.field?.onBlur}
         className="w-4 h-4 accent-primary"
       />
-      <Label>{sentenceCase(props.property?.label ?? props.property.id)}</Label>
+      <Label className="font-normal">
+        {sentenceCase(props.property?.label ?? props.property.id)}
+      </Label>
     </div>
   );
 };

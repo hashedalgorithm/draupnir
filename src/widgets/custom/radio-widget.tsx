@@ -20,7 +20,7 @@ const RadioWidget: FC<TWidgetProps> = props => {
               className="w-4 h-4 accent-primary"
               onChange={props?.field?.onChange}
             />
-            <Label>{sentenceCase(item)}</Label>
+            <Label className="font-normal">{sentenceCase(item)}</Label>
           </div>
         ))}
     </div>

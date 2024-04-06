@@ -1,10 +1,11 @@
 import React from 'react';
-import { FieldManager, WidgetManager } from './managers';
 import { TProperties } from '../types/schema';
+import { FieldManager, WidgetManager } from './managers';
 
 type FieldGeneratorProps = {
   properties: TProperties;
 };
+
 const FieldGenerator = ({ properties }: FieldGeneratorProps) => {
   return (
     <>

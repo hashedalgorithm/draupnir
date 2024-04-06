@@ -14,6 +14,7 @@ const BooleanWidget: FC<TWidgetProps> = props => {
         onCheckedChange={props.field?.onChange}
       />
       <Label
+        className="font-normal"
         htmlFor={props.property.id}
         aria-disabled={props.property?.disabled}
       >
