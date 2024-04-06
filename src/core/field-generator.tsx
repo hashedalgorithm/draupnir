@@ -11,12 +11,12 @@ const FieldGenerator = ({ properties }: FieldGeneratorProps) => {
       {Object.values(properties).map(property => {
         return property?.widget ? (
           <WidgetManager
-            key={`fieldgenerator.property.widgetmanager.${property}`}
+            key={`fieldgenerator.property.widgetmanager.${property.id}`}
             property={property}
           />
         ) : (
           <FieldManager
-            key={`fieldgenerator.property.fieldmanager.${property}`}
+            key={`fieldgenerator.property.fieldmanager.${property.id}`}
             property={property}
           />
         );
