@@ -52,13 +52,35 @@ export type TProperty = {
   step?: number;
 };
 
-export type TCondition = {
-  if?: TConditionIf;
-  then?: string[];
-  else?: string[];
-};
+export type TConditionOperator =
+  | 'greater'
+  | 'lesser'
+  | 'greater_or_equal'
+  | 'lesser_or_equal'
+  | 'equal'
+  | 'not_equal';
 
-export type TConditionIf = {
-  id: string;
-  match: string | number | boolean;
-};
+export type TCondition =
+  | {
+      type: 'if';
+      id: string;
+      match: string | number | boolean;
+      operator: TConditionOperator;
+      then: string[];
+    }
+  | {
+      type: 'ifelse';
+      id: string;
+      match: string | number | boolean;
+      operator: TConditionOperator;
+      then: string[];
+      else: string[];
+    }
+  | {
+      type: 'select_injection';
+      mode: 'replace' | 'add' | 'remove';
+      id: string;
+      match: string;
+      then: string;
+      enum: string[];
+    };

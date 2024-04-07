@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { TProperty, TPropertyType, TWidgetType } from './schema';
+import { TCondition, TProperty, TPropertyType, TWidgetType } from './schema';
 import {
   ControllerFieldState,
   ControllerRenderProps,
@@ -13,6 +13,7 @@ export type TWidgetProps<T = unknown> = T & {
   field?: ControllerRenderProps<FieldValues, string>;
   fieldState?: ControllerFieldState;
   formState?: UseFormStateReturn<FieldValues>;
+  condition?: TCondition;
 };
 
 export type TWidgetBase = {

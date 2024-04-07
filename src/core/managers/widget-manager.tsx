@@ -1,69 +1,54 @@
 import React from 'react';
-import DraupnirNode from '../draupnir-node';
-import UnknownDraupnirNode from '../unknown-draupnir-node';
-import { TWidgetProps } from '../../types/widgets';
+import { TWidgetProps } from '../../types';
 import {
   CheckboxWidget,
   DatePickerWidget,
+  HeadingWidget,
   RadioWidget,
   SelectWidget,
-  TextareaWidget,
   SeparatorWidget,
-  HeadingWidget,
   StringWidget,
+  TextareaWidget,
 } from '../../widgets';
+import DraupnirNode from '../draupnir-node';
 import { useDraupnirRootContext } from '../draupnir-root';
+import UnknownDraupnirNode from '../unknown-draupnir-node';
 
-const WidgetManager = (props: TWidgetProps) => {
+type WidgetManagerProps = Pick<TWidgetProps, 'condition' | 'property'>;
+const WidgetManager = (props: WidgetManagerProps) => {
   const {
     widgets: { base, custom, nonreactive },
   } = useDraupnirRootContext();
 
   switch (props.property.widget) {
     case 'text':
-      return (
-        <DraupnirNode
-          property={props.property}
-          widget={custom.text ?? TextareaWidget}
-        />
-      );
+      return <DraupnirNode {...props} widget={custom.text ?? TextareaWidget} />;
 
     case 'checkbox':
       return (
-        <DraupnirNode
-          property={props.property}
-          widget={custom.checkbox ?? CheckboxWidget}
-        />
+        <DraupnirNode {...props} widget={custom.checkbox ?? CheckboxWidget} />
       );
 
     case 'datepicker':
       return (
         <DraupnirNode
-          property={props.property}
+          {...props}
           widget={custom?.datepicker ?? DatePickerWidget}
         />
       );
 
     case 'select':
       return (
-        <DraupnirNode
-          property={props.property}
-          widget={custom?.select ?? SelectWidget}
-        />
+        <DraupnirNode {...props} widget={custom?.select ?? SelectWidget} />
       );
 
     case 'radio':
-      return (
-        <DraupnirNode
-          property={props.property}
-          widget={custom?.radio ?? RadioWidget}
-        />
-      );
+      return <DraupnirNode {...props} widget={custom?.radio ?? RadioWidget} />;
 
     case 'separator':
       return (
         <DraupnirNode
-          property={props.property}
+          {...props}
           widget={nonreactive?.separator ?? SeparatorWidget}
         />
       );
@@ -71,26 +56,16 @@ const WidgetManager = (props: TWidgetProps) => {
     case 'heading':
       return (
         <DraupnirNode
-          property={props.property}
+          {...props}
           widget={nonreactive?.heading ?? HeadingWidget}
         />
       );
 
     case 'email':
-      return (
-        <DraupnirNode
-          property={props.property}
-          widget={base?.string ?? StringWidget}
-        />
-      );
+      return <DraupnirNode {...props} widget={base?.string ?? StringWidget} />;
 
     case 'url':
-      return (
-        <DraupnirNode
-          property={props.property}
-          widget={base?.string ?? StringWidget}
-        />
-      );
+      return <DraupnirNode {...props} widget={base?.string ?? StringWidget} />;
 
     default:
       return <UnknownDraupnirNode />;

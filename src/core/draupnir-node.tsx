@@ -1,6 +1,6 @@
 import { sentenceCase } from 'change-case';
 import { cva } from 'class-variance-authority';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import {
   FormControl,
@@ -130,12 +130,113 @@ const size = cva('space-y-1', {
   },
 });
 
+const evaluteCondition = (
+  condition: TCondition,
+  values: Record<string, any>
+) => {
+  if (condition.type !== 'select_injection') {
+    switch (condition.operator) {
+      case 'equal':
+        return condition.match === values?.[condition.id];
+      case 'greater':
+        return condition.match < values?.[condition.id];
+      case 'lesser':
+        return condition.match > values?.[condition.id];
+      case 'greater_or_equal':
+        return condition.match <= values?.[condition.id];
+      case 'lesser_or_equal':
+        return condition.match >= values?.[condition.id];
+      case 'not_equal':
+        return condition.match !== values?.[condition.id];
+      default:
+        return false;
+    }
+  }
+  return false;
+};
+
+const injectEnums = (condition: TCondition, property: TProperty) => {
+  if (condition.type === 'select_injection' && property?.enum) {
+    switch (condition.mode) {
+      case 'replace':
+        return {
+          ...property,
+          enum: condition.enum,
+        };
+      case 'add':
+        return {
+          ...property,
+          enum: [...(property.enum ?? []), ...condition.enum],
+        };
+      case 'remove':
+        return {
+          ...property,
+          enum: property.enum.filter(item => !condition.enum.includes(item)),
+        };
+      default:
+        return property;
+    }
+  }
+  return property;
+};
+
 const DraupnirNode = ({
   property,
   widget: Widget,
   className,
+  condition,
 }: DraupnirNodeProps) => {
-  const { control } = useFormContext();
+  const { control, getValues } = useFormContext();
+  const values = getValues();
+
+  const showNode = useMemo(() => {
+    if (condition) {
+      if (condition.id === property.id) return true;
+      if (condition.type === 'if' && condition.then.includes(property.id)) {
+        return evaluteCondition(condition, values);
+      }
+      if (
+        condition.type === 'ifelse' &&
+        evaluteCondition(condition, values) &&
+        condition.then.includes(property.id)
+      )
+        return true;
+      if (
+        condition.type === 'ifelse' &&
+        evaluteCondition(condition, values) &&
+        condition.else.includes(property.id)
+      )
+        return false;
+      if (
+        condition.type === 'ifelse' &&
+        !evaluteCondition(condition, values) &&
+        condition.else.includes(property.id)
+      )
+        return true;
+      if (
+        condition.type === 'ifelse' &&
+        !evaluteCondition(condition, values) &&
+        condition.then.includes(property.id)
+      )
+        return false;
+      return true;
+    } else return true;
+  }, [condition, values, property.id]);
+
+  const injectedProperty = useMemo(() => {
+    if (!condition) return property;
+    if (condition.id === property.id) return property;
+    if (
+      condition?.type === 'select_injection' &&
+      condition.match === values?.[condition.id] &&
+      condition.then === property.id
+    ) {
+      return injectEnums(condition, property);
+    }
+    return property;
+  }, [property.id, condition, values]);
+
+  if (!showNode) return <></>;
 
   return (
     <FormField
@@ -165,7 +266,7 @@ const DraupnirNode = ({
             )}
           <FormControl>
             <Widget
-              property={property}
+              property={injectedProperty}
               field={field}
               fieldState={fieldState}
               formState={formState}

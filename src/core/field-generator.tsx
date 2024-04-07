@@ -1,12 +1,21 @@
 import React from 'react';
-import { TProperties } from '../types/schema';
+import { TCondition, TProperties } from '../types/schema';
 import { FieldManager, WidgetManager } from './managers';
 
 type FieldGeneratorProps = {
   properties: TProperties;
+  conditions: TCondition[];
 };
 
-const FieldGenerator = ({ properties }: FieldGeneratorProps) => {
+const FieldGenerator = ({ properties, conditions }: FieldGeneratorProps) => {
+  const checkIfPropertyIsInvolvedInCondition = (propertyId: string) => {
+    const filteredCondition = conditions.filter(
+      condition =>
+        condition.then.includes(propertyId) ||
+        (condition.type === 'ifelse' && condition?.else.includes(propertyId))
+    );
+    return filteredCondition?.at(0);
+  };
   return (
     <>
       {Object.values(properties).map(property => {
@@ -14,11 +23,13 @@ const FieldGenerator = ({ properties }: FieldGeneratorProps) => {
           <WidgetManager
             key={`fieldgenerator.property.widgetmanager.${property.id}`}
             property={property}
+            condition={checkIfPropertyIsInvolvedInCondition(property.id)}
           />
         ) : (
           <FieldManager
             key={`fieldgenerator.property.fieldmanager.${property.id}`}
             property={property}
+            condition={checkIfPropertyIsInvolvedInCondition(property.id)}
           />
         );
       })}

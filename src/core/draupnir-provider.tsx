@@ -25,72 +25,96 @@ const DraupnirProvider = ({
   onSubmit,
   ...props
 }: DraupnirProviderProps) => {
-  const addStringValidators = useCallback((property: TProperty) => {
-    let zod = z.string({
-      description: property?.helperText,
-      invalid_type_error: `${sentenceCase(property.label ?? property.id)} should be a string`,
-      required_error: `${sentenceCase(property.label ?? property.id)} is required!`,
-    });
-
-    if (property?.readOnly) return zod.readonly();
-
-    if (property?.widget === 'email')
-      return zod.email({
-        message: `"Invalid email address"`,
+  const addStringValidators = useCallback(
+    (property: TProperty) => {
+      let zod = z.string({
+        description: property?.helperText,
+        invalid_type_error: `${sentenceCase(
+          property.label ?? property.id
+        )} should be a string`,
+        required_error: `${sentenceCase(
+          property.label ?? property.id
+        )} is required!`,
       });
 
-    if (property?.widget === 'url') return zod.url({ message: 'Invalid URL' });
+      if (property?.readOnly) return zod.readonly();
 
-    if (property.maximum)
-      zod = zod.max(property.maximum, {
-        message: `Must be ${property.maximum} or low characters long `,
+      if (property?.widget === 'email')
+        return zod.email({
+          message: `"Invalid email address"`,
+        });
+
+      if (property?.widget === 'url')
+        return zod.url({ message: 'Invalid URL' });
+
+      if (property.maximum)
+        zod = zod.max(property.maximum, {
+          message: `Must be ${property.maximum} or low characters long `,
+        });
+
+      if (property.minimum)
+        zod = zod.min(property.minimum, {
+          message: `Must be ${property.minimum} or more characters long`,
+        });
+
+      return zod;
+    },
+    [sentenceCase, z]
+  );
+
+  const addNumberValidators = useCallback(
+    (property: TProperty) => {
+      let zod = z.number({
+        description: property?.helperText,
+        invalid_type_error: `${sentenceCase(
+          property.label ?? property.id
+        )} should be a number`,
+        required_error: `${sentenceCase(
+          property.label ?? property.id
+        )} is required!`,
       });
 
-    if (property.minimum)
-      zod = zod.min(property.minimum, {
-        message: `Must be ${property.minimum} or more characters long`,
+      if (property?.readOnly) return zod.readonly();
+
+      if (property?.required)
+        zod = zod.min(0, {
+          message: `${sentenceCase(
+            property?.label ?? property.id
+          )} is required!`,
+        });
+
+      if (property.maximum)
+        zod = zod.max(property.maximum, {
+          message: `Must be ${property.maximum} or low characters long `,
+        });
+
+      if (property.minimum)
+        zod = zod?.min(property.minimum, {
+          message: `Must be ${property.minimum} or more characters long`,
+        });
+
+      return zod;
+    },
+    [sentenceCase, z]
+  );
+  const addBooleanValidators = useCallback(
+    (property: TProperty) => {
+      let zod = z.boolean({
+        description: property?.helperText,
+        invalid_type_error: `${sentenceCase(
+          property.label ?? property.id
+        )} should be a boolean`,
+        required_error: `${sentenceCase(
+          property.label ?? property.id
+        )} is required!`,
       });
 
-    return zod;
-  }, []);
+      if (property?.readOnly) return zod.readonly();
 
-  const addNumberValidators = useCallback((property: TProperty) => {
-    let zod = z.number({
-      description: property?.helperText,
-      invalid_type_error: `${sentenceCase(property.label ?? property.id)} should be a number`,
-      required_error: `${sentenceCase(property.label ?? property.id)} is required!`,
-    });
-
-    if (property?.readOnly) return zod.readonly();
-
-    if (property?.required)
-      zod = zod.min(0, {
-        message: `${sentenceCase(property?.label ?? property.id)} is required!`,
-      });
-
-    if (property.maximum)
-      zod = zod.max(property.maximum, {
-        message: `Must be ${property.maximum} or low characters long `,
-      });
-
-    if (property.minimum)
-      zod = zod?.min(property.minimum, {
-        message: `Must be ${property.minimum} or more characters long`,
-      });
-
-    return zod;
-  }, []);
-  const addBooleanValidators = useCallback((property: TProperty) => {
-    let zod = z.boolean({
-      description: property?.helperText,
-      invalid_type_error: `${sentenceCase(property.label ?? property.id)} should be a boolean`,
-      required_error: `${sentenceCase(property.label ?? property.id)} is required!`,
-    });
-
-    if (property?.readOnly) return zod.readonly();
-
-    return zod;
-  }, []);
+      return zod;
+    },
+    [sentenceCase, z]
+  );
 
   const zodSchema = useMemo(() => {
     const zods: Record<string, z.ZodType<any>> = {};
@@ -122,7 +146,12 @@ const DraupnirProvider = ({
       }
     }
     return z.object(zods).required(zodRequired);
-  }, [addStringValidators, schema.properties]);
+  }, [
+    addStringValidators,
+    addNumberValidators,
+    addBooleanValidators,
+    schema.properties,
+  ]);
 
   const generateDefaultValues = (schema: TSchema) => {
     const defvals: Record<string, any> = {};
@@ -149,7 +178,7 @@ const DraupnirProvider = ({
   }, [formProps.watch]);
 
   return (
-    <Form {...formProps}>
+    <Form key={`draupnirform.${schema.title}.${schema.version}`} {...formProps}>
       <form
         onSubmit={formProps.handleSubmit(onSubmit)}
         className={props?.className}
@@ -157,6 +186,7 @@ const DraupnirProvider = ({
         <FieldGenerator
           key={`root.fieldgenerator.${schema.title.toLowerCase()}`}
           properties={schema.properties}
+          conditions={schema.conditions}
         />
         {children}
       </form>
