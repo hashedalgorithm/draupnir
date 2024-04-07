@@ -39,7 +39,6 @@ export type TProperty = {
   minimum?: number;
   placeholder?: string;
   label?: string;
-  location?: string;
   helperText?: string;
   required?: boolean;
   readOnly?: boolean;

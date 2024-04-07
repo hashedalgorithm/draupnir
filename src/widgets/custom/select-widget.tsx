@@ -17,7 +17,7 @@ const SelectWidget: FC<TWidgetProps> = props => {
       onValueChange={props.field?.onChange}
       name={props.field?.name}
     >
-      <SelectTrigger name={props.property?.location ?? props.property?.id}>
+      <SelectTrigger name={props.field?.name}>
         <SelectValue placeholder={props.property.placeholder} />
       </SelectTrigger>
       <SelectContent>

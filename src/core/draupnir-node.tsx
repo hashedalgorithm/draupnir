@@ -1,4 +1,7 @@
+import { sentenceCase } from 'change-case';
+import { cva } from 'class-variance-authority';
 import React, { FC } from 'react';
+import { useFormContext } from 'react-hook-form';
 import {
   FormControl,
   FormDescription,
@@ -7,16 +10,14 @@ import {
   FormLabel,
   FormMessage,
 } from '../components/ui/form';
-import { useFormContext } from 'react-hook-form';
-import { TProperty, TWidgetProps } from '../types';
-import { sentenceCase } from 'change-case';
 import { cn } from '../lib/tw-util';
-import { cva } from 'class-variance-authority';
+import { TCondition, TProperty, TWidgetProps } from '../types';
 
 type DraupnirNodeProps = {
   property: TProperty;
   widget: FC<TWidgetProps>;
   className?: string;
+  condition?: TCondition;
 };
 type TSize =
   | '1'
@@ -135,10 +136,11 @@ const DraupnirNode = ({
   className,
 }: DraupnirNodeProps) => {
   const { control } = useFormContext();
+
   return (
     <FormField
       control={control}
-      name={property?.location ?? property.id}
+      name={property.id}
       render={({ field, fieldState, formState }) => (
         <FormItem
           className={cn(
