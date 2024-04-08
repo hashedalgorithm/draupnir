@@ -138,7 +138,6 @@ const App = () => {
       <DraupnirRoot className='px-8 py-4'  
         widgets={{
           base: {
-            string: 
           },
           nonreactive: {},
           custom: {},
