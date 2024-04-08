@@ -8,7 +8,31 @@ const App = () => {
   const schema = {
     title: "Sample",
     version: "0.1",
-    conditions: [],
+    conditions: [
+      {
+        type: "if",
+        id: 'age',
+        match: 18,
+        operator: "lesser_or_equal",
+        then: ['hasVoterId']
+      },
+      {
+        type: "ifelse",
+        id: "gender",
+        match: "male",
+        operator: "equal",
+        then: ['height', 'weight'],
+        else: ['weight']
+      },
+      {
+        type: "select_injection",
+        id: "gender",
+        match: "male",
+        mode: "replace",
+        then: "weight",
+        enum: ['less than 90', '90 - 100', '100 -120', '120 - 130'],
+      }
+    ],
     properties: {
       title: {
         id: "title",
@@ -62,6 +86,12 @@ const App = () => {
         maximum: 50,
         minimum: 0
       },
+      hasVoterId: {
+        id: "hasVoterId",
+        type: 'boolean',
+        label: "Do you have Voter ID (Provided by your Respected Governtment)",
+        helperText: "If you have applied and waiting for issue, then please choose 'yes'."
+      },
       salu: {
         id: "salu",
         type: "string",
@@ -75,6 +105,20 @@ const App = () => {
         widget: 'select',
         enum: ['male', 'female', "others"],
         default: "male"
+      },
+      weight: {
+        id: "weight",
+        type: "string",
+        widget: 'select',
+        enum: ['Lesser than 50', '55 - 60', "60 - 80"],
+      },
+      height: {
+        id: "height",
+        type: "string",
+        widget: 'select',
+        label: "Height (CM)",
+        enum: ['lesser than 150', '150 - 170', "Greater than 170"],
+        default: "lesser than 150"
       },
       isAgree: {
         id: "isAgree",
@@ -93,7 +137,9 @@ const App = () => {
   return (
       <DraupnirRoot className='px-8 py-4'  
         widgets={{
-          base: {},
+          base: {
+            string: 
+          },
           nonreactive: {},
           custom: {},
         }}
