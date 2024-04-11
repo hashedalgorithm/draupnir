@@ -17,7 +17,7 @@ export type TWidgetProps<T = unknown> = T & {
 };
 
 export type TWidgetBase = {
-  [K in TPropertyType]?: FC<TWidgetProps>;
+  [K in TPropertyType | 'label']?: FC<TWidgetProps>;
 };
 
 export type TWidgetCustom = {

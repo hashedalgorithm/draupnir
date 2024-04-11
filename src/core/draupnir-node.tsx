@@ -12,6 +12,7 @@ import {
 } from '../components/ui/form';
 import { cn } from '../lib/tw-util';
 import { TCondition, TProperty, TWidgetProps } from '../types';
+import { useDraupnirRootContext } from './draupnir-root';
 
 type DraupnirNodeProps = {
   property: TProperty;
@@ -186,6 +187,11 @@ const DraupnirNode = ({
   className,
   condition,
 }: DraupnirNodeProps) => {
+  const {
+    widgets: {
+      base: { label: Label },
+    },
+  } = useDraupnirRootContext();
   const { control, getValues } = useFormContext();
   const values = getValues();
 
@@ -260,9 +266,21 @@ const DraupnirNode = ({
             (property?.type === 'boolean' && property?.widget === 'radio')) &&
             property?.widget !== 'separator' &&
             property?.widget !== 'heading' && (
-              <FormLabel>
-                {sentenceCase(property?.label ?? property.id)}
-              </FormLabel>
+              <>
+                {Label ? (
+                  <Label
+                    field={field}
+                    fieldState={fieldState}
+                    formState={formState}
+                    condition={condition}
+                    property={property}
+                  />
+                ) : (
+                  <FormLabel>
+                    {sentenceCase(property?.label ?? property.id)}
+                  </FormLabel>
+                )}
+              </>
             )}
           <FormControl>
             <Widget
