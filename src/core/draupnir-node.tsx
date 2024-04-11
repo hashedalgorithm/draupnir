@@ -189,7 +189,7 @@ const DraupnirNode = ({
 }: DraupnirNodeProps) => {
   const {
     widgets: {
-      base: { label: Label },
+      base: { label: Label, description: Description },
     },
   } = useDraupnirRootContext();
   const { control, getValues } = useFormContext();
@@ -291,7 +291,19 @@ const DraupnirNode = ({
             />
           </FormControl>
           {property?.helperText && (
-            <FormDescription>{property.helperText}</FormDescription>
+            <>
+              {Description ? (
+                <Description
+                  property={property}
+                  condition={condition}
+                  field={field}
+                  fieldState={fieldState}
+                  formState={formState}
+                />
+              ) : (
+                <FormDescription>{property.helperText}</FormDescription>
+              )}
+            </>
           )}
           <FormMessage />
         </FormItem>
