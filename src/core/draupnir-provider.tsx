@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { sentenceCase } from 'change-case';
+import { startCase } from 'lodash';
 import React, {
   PropsWithChildren,
   useCallback,
@@ -29,10 +29,10 @@ const DraupnirProvider = ({
     (property: TProperty) => {
       let zod = z.string({
         description: property?.helperText,
-        invalid_type_error: `${sentenceCase(
+        invalid_type_error: `${startCase(
           property.label ?? property.id
         )} should be a string`,
-        required_error: `${sentenceCase(
+        required_error: `${startCase(
           property.label ?? property.id
         )} is required!`,
       });
@@ -59,17 +59,17 @@ const DraupnirProvider = ({
 
       return zod;
     },
-    [sentenceCase, z]
+    [startCase, z]
   );
 
   const addNumberValidators = useCallback(
     (property: TProperty) => {
       let zod = z.number({
         description: property?.helperText,
-        invalid_type_error: `${sentenceCase(
+        invalid_type_error: `${startCase(
           property.label ?? property.id
         )} should be a number`,
-        required_error: `${sentenceCase(
+        required_error: `${startCase(
           property.label ?? property.id
         )} is required!`,
       });
@@ -78,9 +78,7 @@ const DraupnirProvider = ({
 
       if (property?.required)
         zod = zod.min(0, {
-          message: `${sentenceCase(
-            property?.label ?? property.id
-          )} is required!`,
+          message: `${startCase(property?.label ?? property.id)} is required!`,
         });
 
       if (property.maximum)
@@ -95,16 +93,16 @@ const DraupnirProvider = ({
 
       return zod;
     },
-    [sentenceCase, z]
+    [startCase, z]
   );
   const addBooleanValidators = useCallback(
     (property: TProperty) => {
       let zod = z.boolean({
         description: property?.helperText,
-        invalid_type_error: `${sentenceCase(
+        invalid_type_error: `${startCase(
           property.label ?? property.id
         )} should be a boolean`,
-        required_error: `${sentenceCase(
+        required_error: `${startCase(
           property.label ?? property.id
         )} is required!`,
       });
@@ -113,7 +111,7 @@ const DraupnirProvider = ({
 
       return zod;
     },
-    [sentenceCase, z]
+    [startCase, z]
   );
 
   const zodSchema = useMemo(() => {

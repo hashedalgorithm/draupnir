@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { TWidgetProps } from '../../types';
 import { Label } from '../../components/ui/label';
-import { sentenceCase } from 'change-case';
+import { startCase } from 'lodash';
 
 const RadioWidget: FC<TWidgetProps> = props => {
   return (
@@ -20,7 +20,7 @@ const RadioWidget: FC<TWidgetProps> = props => {
               className="w-4 h-4 accent-primary"
               onChange={props?.field?.onChange}
             />
-            <Label className="font-normal">{sentenceCase(item)}</Label>
+            <Label className="font-normal">{startCase(item)}</Label>
           </div>
         ))}
     </div>

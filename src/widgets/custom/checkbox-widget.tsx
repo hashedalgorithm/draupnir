@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { TWidgetProps } from '../../types';
 import { Label } from '../../components/ui/label';
-import { sentenceCase } from 'change-case';
+import { startCase } from 'lodash';
 
 const CheckboxWidget: FC<TWidgetProps> = props => {
   return (
@@ -15,7 +15,7 @@ const CheckboxWidget: FC<TWidgetProps> = props => {
         className="w-4 h-4 accent-primary"
       />
       <Label className="font-normal">
-        {sentenceCase(props.property?.label ?? props.property.id)}
+        {startCase(props.property?.label ?? props.property.id)}
       </Label>
     </div>
   );

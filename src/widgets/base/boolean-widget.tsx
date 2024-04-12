@@ -3,7 +3,7 @@ import { TWidgetProps } from '../../types';
 import { Switch } from '../../components/ui/switch';
 import { Label } from '../../components/ui/label';
 import { cn } from '../../lib/tw-util';
-import { sentenceCase } from 'change-case';
+import { startCase } from 'lodash';
 
 const BooleanWidget: FC<TWidgetProps> = props => {
   return (
@@ -18,7 +18,7 @@ const BooleanWidget: FC<TWidgetProps> = props => {
         htmlFor={props.property.id}
         aria-disabled={props.property?.disabled}
       >
-        {sentenceCase(props.property?.label ?? props.property.id)}
+        {startCase(props.property?.label ?? props.property.id)}
       </Label>
     </div>
   );

@@ -1,5 +1,5 @@
-import { sentenceCase } from 'change-case';
 import { cva } from 'class-variance-authority';
+import { startCase } from 'lodash';
 import React, { FC, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import {
@@ -277,7 +277,7 @@ const DraupnirNode = ({
                   />
                 ) : (
                   <FormLabel>
-                    {sentenceCase(property?.label ?? property.id)}
+                    {startCase(property?.label ?? property.id)}
                   </FormLabel>
                 )}
               </>
