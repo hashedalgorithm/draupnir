@@ -4,7 +4,7 @@ module.exports = {
   rollup(config, options) {
     config.output.format = 'esm';
     config.output.env = 'production';
-    config.output.target = 'browser';
+    config.output.target = 'node';
     config.plugins.push(
       postcss({
         config: {
