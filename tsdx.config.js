@@ -2,9 +2,7 @@ const postcss = require('rollup-plugin-postcss');
 
 module.exports = {
   rollup(config, options) {
-    config.output.format = 'esm';
-    config.output.env = 'production';
-    config.output.target = 'node';
+    config.output.format = 'cjs';
     config.plugins.push(
       postcss({
         config: {
