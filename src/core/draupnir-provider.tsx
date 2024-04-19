@@ -18,11 +18,13 @@ type DraupnirProviderProps = PropsWithChildren<{
   onChange?: (values: any) => void;
   mode?: 'onBlur' | 'onChange' | 'onSubmit' | 'onTouched' | 'all';
   className?: string;
+  defaultValues?: any;
 }>;
 const DraupnirProvider = ({
   schema,
   children,
   onSubmit,
+  defaultValues,
   ...props
 }: DraupnirProviderProps) => {
   const addStringValidators = useCallback(
@@ -152,6 +154,7 @@ const DraupnirProvider = ({
   ]);
 
   const generateDefaultValues = (schema: TSchema) => {
+    if (defaultValues) return defaultValues;
     const defvals: Record<string, any> = {};
 
     Object.values(schema.properties).forEach(property => {
