@@ -1,6 +1,6 @@
 import { startCase, set } from 'lodash';
 import { z, AnyZodObject, ZodType } from 'zod';
-import { TProperties, TProperty } from '../types';
+import { TProperties, TProperty, TSchema } from '../types';
 
 export const createSchema = (properties: TProperties) => {
   let masterSchema = z.object({} as Record<string, any>);
@@ -155,4 +155,19 @@ export const createRequiredSchema = (properties: TProperties) => {
     }
   });
   return required;
+};
+
+export const generateDefaultValues = (
+  schema: TSchema,
+  defaultValues: Record<string, any>
+) => {
+  if (defaultValues) return defaultValues;
+  const defvals: Record<string, any> = {};
+
+  Object.values(schema.properties).forEach(property => {
+    if (property?.default) {
+      set(defvals, property.id, property.default);
+    }
+  });
+  return defvals;
 };
