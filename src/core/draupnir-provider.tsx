@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { set, startCase } from 'lodash';
 import React, { PropsWithChildren, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { ZodType, z } from 'zod';
+import { AnyZodObject, ZodType, z } from 'zod';
 import { Form } from '../components/ui/form';
 import { TProperties, TProperty, TSchema } from '../types/schema';
 import { FieldGenerator } from './field-generator';
@@ -16,56 +16,22 @@ type DraupnirProviderProps = PropsWithChildren<{
 }>;
 
 const createSchema = (properties: TProperties) => {
-  let master = z.object({});
+  let masterSchema = z.object({} as Record<string, any>);
 
   Object.values(properties).forEach(property => {
     if (property.id.split('.').length === 1) {
-      console.log(property, 'key-leaf');
-
-      master = master.extend({
+      masterSchema = masterSchema.extend({
         [property.id]: createLeafZod(property),
       });
     } else {
-      console.log(property, 'key-nested');
       const toplevel = property.id.split('.').at(0);
-      if (toplevel) {
-        master = master.extend({
-          [toplevel]: createNestedSchema(
-            property.id
-              .split('.')
-              .filter(i => i !== toplevel)
-              .join('.'),
-            property
-          ),
-        });
-        console.log('createschema---', master.shape);
-      } else {
-        console.log('else---', property.id);
-      }
-    }
-  });
 
-  return master;
-};
+      if (!toplevel) return masterSchema;
 
-const createNestedSchema = (
-  propertyId: string,
-  property: TProperty
-): ZodType => {
-  let master = z.object({});
-  if (propertyId.split('.').length === 1) {
-    console.log('nested-leaf', propertyId);
-    master = master.extend({
-      [propertyId]: createLeafZod(property),
-    });
-  } else {
-    console.log('nested-deep', propertyId);
-    const toplevel = propertyId.split('.').at(0);
-    if (toplevel) {
-      console.log('toplevel', propertyId);
-      master = master.extend({
+      masterSchema = masterSchema.extend({
         [toplevel]: createNestedSchema(
-          propertyId
+          masterSchema.shape?.[toplevel] ?? masterSchema,
+          property.id
             .split('.')
             .filter(i => i !== toplevel)
             .join('.'),
@@ -73,8 +39,38 @@ const createNestedSchema = (
         ),
       });
     }
+  });
+
+  return masterSchema;
+};
+
+const createNestedSchema = (
+  root: AnyZodObject,
+  propertyId: string,
+  property: TProperty
+): ZodType => {
+  const toplevel = propertyId.split('.').at(0);
+
+  if (!toplevel) return root;
+
+  let master = root.shape?.[toplevel] ?? root;
+
+  if (propertyId.split('.').length === 1) {
+    master = master.extend({
+      [propertyId]: createLeafZod(property),
+    });
+  } else {
+    master = master.extend({
+      [toplevel]: createNestedSchema(
+        master.shape?.[toplevel] ?? master,
+        propertyId
+          .split('.')
+          .filter(i => i !== toplevel)
+          .join('.'),
+        property
+      ),
+    });
   }
-  console.log('nested-master', master.shape);
   return master;
 };
 
@@ -180,18 +176,13 @@ const DraupnirProvider = ({
   onSubmit,
   ...props
 }: DraupnirProviderProps) => {
-  const zodSchema = useMemo(() => {
-    // let objectmap: Record<string, any> = {};
-
-    // Object.values(schema.properties).forEach(property => {
-    //   set(objectmap, property.id, property);
-    // });
-
-    const result = createSchema(schema.properties);
-
-    console.log(result.shape, 'objectmap & rsult');
-    return result.required(createRequiredSchema(schema.properties));
-  }, [schema.properties]);
+  const zodSchema = useMemo(
+    () =>
+      createSchema(schema.properties).required(
+        createRequiredSchema(schema.properties)
+      ),
+    [schema.properties]
+  );
 
   const generateDefaultValues = (schema: TSchema) => {
     const defvals: Record<string, any> = {};
