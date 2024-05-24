@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { set, startCase } from 'lodash';
 import React, { PropsWithChildren, useEffect, useMemo } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormState, useForm } from 'react-hook-form';
 import { AnyZodObject, ZodType, z } from 'zod';
 import { Form } from '../components/ui/form';
 import { TProperties, TProperty, TSchema } from '../types/schema';
@@ -13,6 +13,7 @@ type DraupnirProviderProps = PropsWithChildren<{
   onChange?: (values: any) => void;
   mode?: 'onBlur' | 'onChange' | 'onSubmit' | 'onTouched' | 'all';
   className?: string;
+  getFormState?: (state: FormState<any>) => void;
 }>;
 
 const createSchema = (properties: TProperties) => {
@@ -26,7 +27,7 @@ const createSchema = (properties: TProperties) => {
     } else {
       const toplevel = property.id.split('.').at(0);
 
-      if (!toplevel) return masterSchema;
+      if (!toplevel) return;
 
       masterSchema = masterSchema.extend({
         [toplevel]: createNestedSchema(
@@ -174,6 +175,7 @@ const DraupnirProvider = ({
   schema,
   children,
   onSubmit,
+  getFormState,
   ...props
 }: DraupnirProviderProps) => {
   const zodSchema = useMemo(
@@ -209,6 +211,12 @@ const DraupnirProvider = ({
     });
     return () => subscription.unsubscribe();
   }, [formProps.watch]);
+
+  useEffect(() => {
+    if (typeof getFormState === 'function' && getFormState) {
+      getFormState(formProps.formState);
+    }
+  }, [formProps.formState, getFormState]);
 
   return (
     <Form key={`draupnirform.${schema.title}.${schema.version}`} {...formProps}>
