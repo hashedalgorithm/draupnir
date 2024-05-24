@@ -9,37 +9,74 @@ const App = () => {
     title: "Sample",
     version: "0.1",
     conditions: [
-      {
-        type: "if",
-        id: 'age',
-        match: 18,
-        operator: "lesser_or_equal",
-        then: ['hasVoterId']
-      },
-      {
-        type: "ifelse",
-        id: "gender",
-        match: "male",
-        operator: "equal",
-        then: ['height', 'weight'],
-        else: ['weight']
-      },
-      {
-        type: "select_injection",
-        id: "gender",
-        match: "male",
-        mode: "replace",
-        then: "weight",
-        enum: ['less than 90', '90 - 100', '100 -120', '120 - 130'],
-      }
+      // {
+      //   type: "if",
+      //   id: 'age',
+      //   match: 18,
+      //   operator: "lesser_or_equal",
+      //   then: ['hasVoterId']
+      // },
+      // {
+      //   type: "ifelse",
+      //   id: "gender",
+      //   match: "male",
+      //   operator: "equal",
+      //   then: ['height', 'weight'],
+      //   else: ['weight']
+      // },
+      // {
+      //   type: "select_injection",
+      //   id: "gender",
+      //   match: "male",
+      //   mode: "replace",
+      //   then: "weight",
+      //   enum: ['less than 90', '90 - 100', '100 -120', '120 - 130'],
+      // }
     ],
     properties: {
-      title: {
-        id: "title",
-        type: "string",
-        widget: "heading",
-        hlevel: "h2",
-        label: "Personal Details Form"
+      'details.blood': {
+        id: 'details.blood',
+        type: 'string',
+        placeholder: 'O +ve',
+        required: true,
+        label: "Blood Group",
+        minimum: 5,
+        maximum: 10,
+      },
+      'details.address.streeno': {
+        id: 'details.address.streeno',
+        type: 'string',
+        placeholder: 'No.123',
+        required: true,
+        label: "Streetno",
+        minimum: 5,
+        maximum: 10,
+      },
+      'details.address.landmark': {
+        id: 'details.address.landmark',
+        type: 'string',
+        maximum: 10,
+        label: "Landmark",
+        minimum: 5,
+        placeholder: 'Near playground'
+      },
+      'details.currency.code': {
+        id: 'details.currency.code',
+        type: 'string',
+        label: "Currency",
+        required: true,
+        default: "INR",
+        enum: ['INR', 'EUR'],
+        widget: 'select',
+        placeholder: 'INR'
+      },
+      'details.currency.amount': {
+        id: 'details.currency.amount',
+        type: 'number',
+        minimum: 100,
+        maximum: 1000,
+        label: 'Amount',
+        placeholder: '100'
       },
       fname: {
         id: "fname",
@@ -67,69 +104,6 @@ const App = () => {
           wide: 4
         }
       },
-      fullname: {
-        id: "fullname",
-        type: "string",
-        label: "Full Name",
-        maximum: 20,
-        minimum: 5,
-        view: {
-          lg: 12,
-          xl: 4,
-          xxl: 4, 
-          wide: 4
-        }
-      },
-      age: {
-        id: "age",
-        type: "number",
-        maximum: 50,
-        minimum: 0
-      },
-      hasVoterId: {
-        id: "hasVoterId",
-        type: 'boolean',
-        label: "Do you have Voter ID (Provided by your Respected Governtment)",
-        helperText: "If you have applied and waiting for issue, then please choose 'yes'."
-      },
-      salu: {
-        id: "salu",
-        type: "string",
-        widget: "radio",
-        enum: ["mr.", "mrs.", "ms."],
-        default: "mr."
-      },
-      gender: {
-        id: "gender",
-        type: "string",
-        widget: 'select',
-        enum: ['male', 'female', "others"],
-        default: "male"
-      },
-      weight: {
-        id: "weight",
-        type: "string",
-        widget: 'select',
-        enum: ['Lesser than 50', '55 - 60', "60 - 80"],
-      },
-      height: {
-        id: "height",
-        type: "string",
-        widget: 'select',
-        label: "Height (CM)",
-        enum: ['lesser than 150', '150 - 170', "Greater than 170"],
-        default: "lesser than 150"
-      },
-      isAgree: {
-        id: "isAgree",
-        type: "boolean",
-        required: true
-      },
-      separator: {
-        id: "separator",
-        type: "string",
-        widget: "separator"
-      }
     },
   } satisfies TSchema;
 
@@ -145,7 +119,7 @@ const App = () => {
       >
       <DraupnirProvider mode='all' className='grid grid-cols-12 gap-4' schema={schema} onSubmit={(val) => { 
         console.log(val, "onsubmit")
-      }} onChange={(val) => { console.log(val) }} >
+      }} onChange={(val) => { console.log(val) }}>
         <button type='submit'>submit</button>
       </DraupnirProvider>
       </DraupnirRoot>
