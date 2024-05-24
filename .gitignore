@@ -5,3 +5,16 @@ node_modules
 dist
 example/.parcel-cache/data.mdb
 example/.parcel-cache/lock.mdb
+.parcel-cache/8e1817009022b7e1-AssetGraph-0
+.parcel-cache/4660c65455d9bc16-AssetGraph-0
+.parcel-cache/data.mdb
+.parcel-cache/lock.mdb
+.parcel-cache/requestGraph-18f6ddb596281f82-0
+.parcel-cache/requestGraph-e1d78a3073793906-0
+.parcel-cache/requestGraph-nodes-0-18f6ddb596281f82-0
+.parcel-cache/requestGraph-nodes-0-e1d78a3073793906-0
+.parcel-cache/requestGraph-nodes-1-e1d78a3073793906-0
+.parcel-cache/requestGraph-nodes-2-e1d78a3073793906-0
+.parcel-cache/requestGraph-nodes-3-e1d78a3073793906-0
+.parcel-cache/snapshot-18f6ddb596281f82.txt
+.parcel-cache/snapshot-e1d78a3073793906.txt
