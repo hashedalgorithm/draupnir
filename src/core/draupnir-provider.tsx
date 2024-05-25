@@ -1,5 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { PropsWithChildren, useEffect, useMemo } from 'react';
+import React, {
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+} from 'react';
 import { FormState, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Form } from '../components/ui/form';
@@ -18,15 +24,17 @@ type DraupnirProviderProps = PropsWithChildren<{
   mode?: 'onBlur' | 'onChange' | 'onSubmit' | 'onTouched' | 'all';
   className?: string;
   defaultValues?: Record<string, any>;
-  getFormState?: (state: FormState<any>) => void;
 }>;
+
+const RawContext = createContext<FormState<any> | {}>({});
+
+const useDraupnirContext = () => useContext(RawContext);
 
 const DraupnirProvider = ({
   schema,
   children,
   onSubmit,
   defaultValues,
-  getFormState,
   ...props
 }: DraupnirProviderProps) => {
   const zodSchema = useMemo(
@@ -53,20 +61,25 @@ const DraupnirProvider = ({
   }, [formProps.watch]);
 
   return (
-    <Form key={`draupnirform.${schema.title}.${schema.version}`} {...formProps}>
-      <form
-        onSubmit={formProps.handleSubmit(onSubmit)}
-        className={props?.className}
+    <RawContext.Provider value={formProps}>
+      <Form
+        key={`draupnirform.${schema.title}.${schema.version}`}
+        {...formProps}
       >
-        <FieldGenerator
-          key={`root.fieldgenerator.${schema.title.toLowerCase()}`}
-          properties={schema.properties}
-          conditions={schema.conditions}
-        />
-        {children}
-      </form>
-    </Form>
+        <form
+          onSubmit={formProps.handleSubmit(onSubmit)}
+          className={props?.className}
+        >
+          <FieldGenerator
+            key={`root.fieldgenerator.${schema.title.toLowerCase()}`}
+            properties={schema.properties}
+            conditions={schema.conditions}
+          />
+          {children}
+        </form>
+      </Form>
+    </RawContext.Provider>
   );
 };
 
-export { DraupnirProvider };
+export { DraupnirProvider, useDraupnirContext };
