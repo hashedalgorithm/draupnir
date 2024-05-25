@@ -28,7 +28,13 @@ type DraupnirProviderProps = PropsWithChildren<{
   extendForm?: ReactNode;
 }>;
 
-const RawContext = createContext<FormState<any> | {}>({});
+type ProviderState = {
+  formState: FormState<any> | null;
+};
+
+const RawContext = createContext<ProviderState>({
+  formState: null,
+});
 
 const useDraupnirContext = () => useContext(RawContext);
 
@@ -64,7 +70,7 @@ const DraupnirProvider = ({
   }, [formProps.watch]);
 
   return (
-    <RawContext.Provider value={formProps}>
+    <RawContext.Provider value={{ formState: formProps.formState }}>
       <>
         <Form
           key={`draupnirform.${schema.title}.${schema.version}`}
