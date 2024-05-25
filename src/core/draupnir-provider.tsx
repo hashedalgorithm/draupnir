@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, {
   PropsWithChildren,
+  ReactNode,
   createContext,
   useContext,
   useEffect,
@@ -24,6 +25,7 @@ type DraupnirProviderProps = PropsWithChildren<{
   mode?: 'onBlur' | 'onChange' | 'onSubmit' | 'onTouched' | 'all';
   className?: string;
   defaultValues?: Record<string, any>;
+  extendForm?: ReactNode;
 }>;
 
 const RawContext = createContext<FormState<any> | {}>({});
@@ -35,6 +37,7 @@ const DraupnirProvider = ({
   children,
   onSubmit,
   defaultValues,
+  extendForm,
   ...props
 }: DraupnirProviderProps) => {
   const zodSchema = useMemo(
@@ -62,22 +65,25 @@ const DraupnirProvider = ({
 
   return (
     <RawContext.Provider value={formProps}>
-      <Form
-        key={`draupnirform.${schema.title}.${schema.version}`}
-        {...formProps}
-      >
-        <form
-          onSubmit={formProps.handleSubmit(onSubmit)}
-          className={props?.className}
+      <>
+        <Form
+          key={`draupnirform.${schema.title}.${schema.version}`}
+          {...formProps}
         >
-          <FieldGenerator
-            key={`root.fieldgenerator.${schema.title.toLowerCase()}`}
-            properties={schema.properties}
-            conditions={schema.conditions}
-          />
-          {children}
-        </form>
-      </Form>
+          <form
+            onSubmit={formProps.handleSubmit(onSubmit)}
+            className={props?.className}
+          >
+            <FieldGenerator
+              key={`root.fieldgenerator.${schema.title.toLowerCase()}`}
+              properties={schema.properties}
+              conditions={schema.conditions}
+            />
+            {extendForm}
+          </form>
+        </Form>
+        {children}
+      </>
     </RawContext.Provider>
   );
 };
