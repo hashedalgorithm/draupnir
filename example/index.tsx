@@ -3,6 +3,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { DraupnirRoot, DraupnirProvider, TSchema } from '../dist';
 import "./index.css"
+import FormComponent from './form-component';
 
 const App = () => {
   const schema = {
@@ -121,6 +122,7 @@ const App = () => {
         console.log(val, "onsubmit")
       }} onChange={(val) => { console.log(val) }}>
         <button type='submit'>submit</button>
+        <FormComponent />
       </DraupnirProvider>
       </DraupnirRoot>
       );
