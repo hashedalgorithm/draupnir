@@ -47,9 +47,17 @@ export type TProperty = {
   pattern?: string;
   view?: TView;
   disabled?: boolean;
-  enum?: string[];
+  enum?: TEnums;
   hlevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   step?: number;
+};
+
+export type TEnums = Array<TEnum | string>;
+
+export type TEnum = {
+  label: string;
+  value: string;
+  disabled?: boolean;
 };
 
 export type TConditionOperator =
@@ -82,5 +90,5 @@ export type TCondition =
       id: string;
       match: string;
       then: string;
-      enum: string[];
+      enum: TEnums;
     };

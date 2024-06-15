@@ -25,9 +25,14 @@ const SelectWidget: FC<TWidgetProps> = props => {
           props.property.enum.map((item, index) => (
             <SelectItem
               key={`widgetmanager.select.defaultselect.option.${props.property.id}.${index}`}
-              value={item}
+              value={typeof item === 'string' ? item : item.value}
+              disabled={
+                typeof item === 'string'
+                  ? props?.property?.disabled
+                  : item?.disabled
+              }
             >
-              {startCase(item)}
+              {typeof item === 'string' ? startCase(item) : item.label}
             </SelectItem>
           ))}
       </SelectContent>

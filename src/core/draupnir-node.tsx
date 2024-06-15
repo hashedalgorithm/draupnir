@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from '../components/ui/form';
 import { cn } from '../lib/tw-util';
-import { TCondition, TProperty, TWidgetProps } from '../types';
+import { TCondition, TEnum, TProperty, TWidgetProps } from '../types';
 import { useDraupnirRootContext } from './draupnir-root';
 
 type DraupnirNodeProps = {
@@ -169,11 +169,37 @@ const injectEnums = (condition: TCondition, property: TProperty) => {
           ...property,
           enum: [...(property.enum ?? []), ...condition.enum],
         };
-      case 'remove':
-        return {
-          ...property,
-          enum: property.enum.filter(item => !condition.enum.includes(item)),
-        };
+      case 'remove': {
+        if (typeof property.enum.at(0) !== typeof condition.enum.at(0))
+          return property;
+
+        if (
+          typeof property.enum.at(0) === 'string' &&
+          typeof condition.enum.at(0) === 'string'
+        ) {
+          return {
+            ...property,
+            enum: property.enum.filter(
+              item => !condition.enum.includes(item as string)
+            ),
+          };
+        } else {
+          const typecastedOrginalEnums = property.enum as TEnum[];
+          const typecastedToBeInjectedEnums = condition?.enum as TEnum[];
+
+          return {
+            ...property,
+            enum: typecastedOrginalEnums.filter(
+              item =>
+                !typecastedToBeInjectedEnums.reduce(
+                  (previousValue, currentValue) =>
+                    previousValue || currentValue.value === item.value,
+                  false
+                )
+            ),
+          };
+        }
+      }
       default:
         return property;
     }
@@ -264,8 +290,7 @@ const DraupnirNode = ({
             className
           )}
         >
-          {(property.type !== 'boolean' ||
-            (property?.type === 'boolean' && property?.widget === 'radio')) &&
+          {property.type !== 'boolean' &&
             property?.widget !== 'separator' &&
             property?.widget !== 'heading' && (
               <>
@@ -279,7 +304,7 @@ const DraupnirNode = ({
                   />
                 ) : (
                   <FormLabel>
-                    {startCase(property?.label ?? property.id)}
+                    {property?.label ?? startCase(property.id)}
                   </FormLabel>
                 )}
               </>

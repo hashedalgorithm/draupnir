@@ -15,12 +15,21 @@ const RadioWidget: FC<TWidgetProps> = props => {
             <input
               {...props.field}
               type="radio"
-              value={item}
-              checked={props.field?.value === item}
+              value={typeof item === 'string' ? item : item.value}
+              disabled={
+                typeof item === 'string'
+                  ? props.property?.disabled
+                  : item?.disabled
+              }
+              checked={
+                props.field?.value ===
+                (typeof item === 'string' ? item : item.value)
+              }
               className="w-4 h-4 accent-primary"
-              onChange={props?.field?.onChange}
             />
-            <Label className="font-normal">{startCase(item)}</Label>
+            <Label className="font-normal">
+              {typeof item === 'string' ? startCase(item) : item.label}
+            </Label>
           </div>
         ))}
     </div>
