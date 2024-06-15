@@ -1,16 +1,19 @@
 import { startCase } from 'lodash';
-import React, { FC, FormEventHandler } from 'react';
+import React, { FC, FormEventHandler, useMemo } from 'react';
 import { Label } from '../../components/ui/label';
 import { TWidgetProps } from '../../types';
 
 const CheckboxGroupWidget: FC<TWidgetProps> = props => {
+  const currentValues = useMemo(
+    () =>
+      ((props.field?.value as string[])?.filter(item => !!item) ??
+        []) as string[],
+    [props.field?.value]
+  );
+
   const handleOnChange: FormEventHandler<HTMLInputElement> = e => {
     const value = e.currentTarget.getAttribute('data-value');
     if (!value) return;
-
-    const currentValues = ((props.field?.value as string[])?.filter(
-      item => !!item
-    ) ?? []) as string[];
 
     if (currentValues.includes(value)) {
       if (props.property?.minimum) {
@@ -47,7 +50,7 @@ const CheckboxGroupWidget: FC<TWidgetProps> = props => {
                   ? props.property?.disabled
                   : item?.disabled
               }
-              checked={props.field?.value?.includes(
+              checked={currentValues.includes(
                 typeof item === 'string' ? item : item.value
               )}
               data-value={typeof item === 'string' ? item : item.value}
