@@ -66,15 +66,34 @@ const App = () => (
     <DraupnirProvider
         schema={schema}
         onSubmit={handleOnSubmit}
-        mode={'onChange'}> // Controls when validations should run, onChange, onBlur, all, onSubmit
+        mode={'onChange'} // Controls when validations should run, onChange, onBlur, all, onSubmit
+        extendForm={
+        <>
+          // you can extend the form with form action button here.
           <button type='submit'>Sumit</button>
           <button type='button'>Cancel</button>
-          // you can extend the form with form action button here.
+        </>
+        }>
+          // you can extend children. This children will be outside the form context but it can access formState from draupnir context.
+          <FormSection />
     </DraupnirProvider>
   </DraupnirRoot>
 );
 
 export default App;
+```
+
+
+```typescript
+const FormSection = () => {
+  const { formState } = useDraupnirContext();
+
+  //contains form values such as values, errors, isdirty etc
+  console.log(formState)
+  return(
+    <div>Form Section that contains input elements!</div>
+)
+}
 ```
 
 ## Example Schema
