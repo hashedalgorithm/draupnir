@@ -5,7 +5,7 @@ import { TProperties, TProperty, TSchema } from '../types';
 export const createSchema = (properties: TProperties) => {
   let masterSchema = z.object({} as Record<string, any>);
 
-  Object.values(properties).forEach(property => {
+  filterNonReactiveProperties(properties).forEach(property => {
     if (property.id.split('.').length === 1) {
       masterSchema = masterSchema.extend({
         [property.id]: createLeafZod(property),
@@ -149,7 +149,7 @@ export const addBooleanValidators = (property: TProperty) => {
 
 export const createRequiredSchema = (properties: TProperties) => {
   let required: Record<string, any> = {};
-  Object.values(properties).forEach(property => {
+  filterNonReactiveProperties(properties).forEach(property => {
     if (property?.required) {
       set(required, property.id, property.required);
     }
@@ -164,10 +164,18 @@ export const generateDefaultValues = (
   if (defaultValues) return defaultValues;
   const defvals: Record<string, any> = {};
 
-  Object.values(schema.properties).forEach(property => {
+  filterNonReactiveProperties(schema.properties).forEach(property => {
     if (property?.default) {
       set(defvals, property.id, property.default);
     }
   });
   return defvals;
 };
+
+export const filterNonReactiveProperties = (properties: TProperties) =>
+  Object.values(properties).filter(
+    property =>
+      property.type !== 'none' &&
+      property?.widget !== 'separator' &&
+      property?.widget !== 'heading'
+  );

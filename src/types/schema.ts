@@ -6,7 +6,7 @@ export type TSchema = {
   conditions: TCondition[];
 };
 
-export type TPropertyType = 'string' | 'number' | 'boolean';
+export type TPropertyType = 'string' | 'number' | 'boolean' | 'none';
 export type TWidgetType =
   | 'select'
   | 'checkbox'

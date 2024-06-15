@@ -244,6 +244,8 @@ const DraupnirNode = ({
 
   if (!showNode) return <></>;
 
+  if (property.type === 'none') return <Widget property={injectedProperty} />;
+
   return (
     <FormField
       control={control}
