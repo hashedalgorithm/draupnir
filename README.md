@@ -1,9 +1,6 @@
 # Draupnir 🪄
 ![draupnir](https://github.com/hashedalgorithm/draupnir/assets/53309069/da55b4b6-0f06-4d3c-8ca3-0d718ef0ccef)
 
-![](https://img.shields.io/github/tag/pandao/editor.md.svg) 
-![](https://img.shields.io/github/release/pandao/editor.md.svg) 
-
 Draupnir is a dynamic form generator for React applications, designed to streamline the process of creating forms based on JSON Schema. Unlike some existing libraries, Draupnir prioritizes flexibility and customization, empowering developers to tailor the form renderer to their specific needs.
 
 ### Features
@@ -68,11 +65,11 @@ const App = () => (
         onSubmit={handleOnSubmit}
         mode={'onChange'} // Controls when validations should run, onChange, onBlur, all, onSubmit
         extendForm={
-        <>
-          // you can extend the form with form action button here.
-          <button type='submit'>Sumit</button>
-          <button type='button'>Cancel</button>
-        </>
+          <>
+            // you can extend the form with form action button here.
+            <button type='submit'>Sumit</button>
+            <button type='button'>Cancel</button>
+          </>
         }>
           // you can extend children. This children will be outside the form context but it can access formState from draupnir context.
           <FormSection />
@@ -236,8 +233,9 @@ properties: {
   }
 }
 ```
-- **type**: *Required.* Type of the property. It can be one of: 'string', 'number', or 'boolean'.
-- **widget**: Optional. Type of widget to be used for rendering the field (It can be one of: 'select', 'checkbox', 'radio', 'email', 'url', 'datepicker', 'text', 'separator', 'heading').
+- **id**: *Required.* A unique identifier for the property.
+- **type**: *Required.* Type of the property. It can be one of string literals: 'string', 'number', 'string-array' or 'boolean'.
+- **widget**: Optional. Type of widget to be used for rendering the field (It can be one of literals: 'select', 'checkbox-group', 'checkbox', 'radio', 'email', 'url', 'datepicker', 'text', 'separator', 'heading').
 - **maximum**: Optional. Maximum value allowed for the property (applicable for number, string type).
 - **minimum**: Optional. Minimum value allowed for the property (applicable for number, string type).
 - **placeholder**: Optional. Placeholder text for the field (applicable for string, number, widgets: select, datepicker, email, url, text).
@@ -246,10 +244,10 @@ properties: {
 - **required**: Optional. Indicates whether the field is required.
 - **readOnly**: Optional. Indicates whether the field is read-only.
 - **errorText**: Optional. Custom Error message to display when validation fails.
-- **default**: Optional. Default value for the field.
+- **default**: Optional. Default value for the field It can be one of types: 'string', 'number', 'string[]', or 'boolean'.
 - **pattern**: Optional. Regular expression pattern for validating the field value.
 - **view**: Optional. Configuration for the view of the property, including size settings for different breakpoints.
-
+  
 Screen Breakpoints
 ```typescript
   sm: { max: '600px' },
@@ -287,11 +285,46 @@ Default field span
 | wide       | 6    |
   
 - **disabled**: Optional. Indicates whether the field is disabled.
-- **enum**: Optional. List of values for the field (applicable for widgets: radio and selet only).
-- **hlevel**: Optional. Heading level for the field (applicable only for widget: heading).
-- **step**: Optional. Step value for number inputs (applicable for number type).
+- **enum**: Optional. Enumeration of possible values for the field. This is exclusive fields using widget for select, checkbox-group and radio.
+Enums
+```typescript
+  type TEnums = Array<TEnum | string>;
+
+  type TEnum = {
+    label: string;
+    value: string;
+    disabled?: boolean;
+  };
+
+  {
+    enum: ['option1', 'option2', 'option3', ... n number of options that to be rendered.] // for just want to get the job done.
+    ...other properties
+  }
+
+  //For more control
+  {
+    enum: [
+      { lable: "Option 1", value: "option1" },
+      { lable: "Option 2", value: "option2" },
+      { lable: "Option 3", value: "option2", disabled: true },
+      ...n number of options that to be rendered.
+    ]
+  }
+```
+Note: It is Recommended to maintain uniformity by using either string or TEnum for your enum elements when there is conditions involved like select_injection.
+
+Refer the example in the start of documentation for more context. The example showcases the usage of the enums as string[] uniformly throughtout the conditions and properties section.
+
+- **hlevel**: Optional. Exculsive field for field using heading widget. Specifies the heading level for heading widget. Possible values: `'h1'`, `'h2'`, `'h3'`, `'h4'`, `'h5'`, `'h6'`.
+- **step**: Optional. Exclusive for number inputs. Specifies the step value for numeric inputs.
 
 These keys provide comprehensive options for configuring fields within a schema, ensuring flexibility and customization in form generation.
+
+## Field Type and Widget Type
+| Field Type | Widget Type | Renderer |
+|------------|--------|---------|
+| string     | NA   | Input |
+
 
 ## TCondition
 The `TCondition` type represents a condition to be applied to the field:
@@ -319,7 +352,7 @@ type TCondition =
       id: string;
       match: string;
       then: string;
-      enum: string[];
+      enum: TEnums;
     };
 ```
 
