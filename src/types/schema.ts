@@ -6,10 +6,16 @@ export type TSchema = {
   conditions: TCondition[];
 };
 
-export type TPropertyType = 'string' | 'number' | 'boolean' | 'none';
+export type TPropertyType =
+  | 'string'
+  | 'number'
+  | 'boolean'
+  | 'none'
+  | 'string-array';
 export type TWidgetType =
   | 'select'
   | 'checkbox'
+  | 'checkbox-group'
   | 'radio'
   | 'email'
   | 'url'
@@ -43,7 +49,7 @@ export type TProperty = {
   required?: boolean;
   readOnly?: boolean;
   errorText?: string;
-  default?: string | number | boolean;
+  default?: string | number | boolean | string[];
   pattern?: string;
   view?: TView;
   disabled?: boolean;

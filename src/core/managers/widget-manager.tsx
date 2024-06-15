@@ -13,6 +13,7 @@ import {
 import DraupnirNode from '../draupnir-node';
 import { useDraupnirRootContext } from '../draupnir-root';
 import UnknownDraupnirNode from '../unknown-draupnir-node';
+import { CheckboxGroupWidget } from '../../widgets/custom/checkbox-group-widget';
 
 type WidgetManagerProps = Pick<TWidgetProps, 'condition' | 'property'>;
 const WidgetManager = (props: WidgetManagerProps) => {
@@ -27,6 +28,14 @@ const WidgetManager = (props: WidgetManagerProps) => {
     case 'checkbox':
       return (
         <DraupnirNode {...props} widget={custom.checkbox ?? CheckboxWidget} />
+      );
+
+    case 'checkbox-group':
+      return (
+        <DraupnirNode
+          {...props}
+          widget={custom?.['checkbox-group'] ?? CheckboxGroupWidget}
+        />
       );
 
     case 'datepicker':

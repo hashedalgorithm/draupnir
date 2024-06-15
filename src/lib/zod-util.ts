@@ -69,6 +69,8 @@ export const createLeafZod = (property: TProperty): z.ZodType<any> => {
       return addNumberValidators(property);
     case 'boolean':
       return addBooleanValidators(property);
+    case 'string-array':
+      return addStringArrayValidators(property);
     default:
       return z.any();
   }
@@ -77,10 +79,9 @@ export const createLeafZod = (property: TProperty): z.ZodType<any> => {
 export const addStringValidators = (property: TProperty) => {
   let zod = z.string({
     description: property?.helperText,
-    invalid_type_error: `${startCase(
-      property.label ?? property.id
-    )} should be a string`,
-    required_error: `${startCase(property.label ?? property.id)} is required!`,
+    invalid_type_error: `${property.label ??
+      startCase(property.id)} should be a string`,
+    required_error: `${property.label ?? startCase(property.id)} is required!`,
   });
 
   if (property?.readOnly) return zod.readonly();
@@ -104,13 +105,36 @@ export const addStringValidators = (property: TProperty) => {
   return zod;
 };
 
+export const addStringArrayValidators = (property: TProperty) => {
+  const str = z.string({
+    description: property?.helperText,
+    invalid_type_error: `${property.label ??
+      startCase(property.id)} should be a string`,
+    required_error: `${property.label ?? startCase(property.id)} is required!`,
+  });
+
+  let zod = z.array(str);
+
+  if (property?.readOnly) return zod.readonly();
+
+  if (property?.maximum)
+    zod = zod.max(property.maximum, {
+      message: `Must be ${property.maximum} or low items in the list`,
+    });
+
+  if (property?.minimum)
+    zod = zod.min(property.minimum, {
+      message: `Must be ${property.minimum} or more items in the list`,
+    });
+  return zod;
+};
+
 export const addNumberValidators = (property: TProperty) => {
   let zod = z.number({
     description: property?.helperText,
-    invalid_type_error: `${startCase(
-      property.label ?? property.id
-    )} should be a number`,
-    required_error: `${startCase(property.label ?? property.id)} is required!`,
+    invalid_type_error: `${property.label ??
+      startCase(property.id)} should be a number`,
+    required_error: `${property.label ?? startCase(property.id)} is required!`,
   });
 
   if (property?.readOnly) return zod.readonly();
@@ -136,10 +160,9 @@ export const addNumberValidators = (property: TProperty) => {
 export const addBooleanValidators = (property: TProperty) => {
   let zod = z.boolean({
     description: property?.helperText,
-    invalid_type_error: `${startCase(
-      property.label ?? property.id
-    )} should be a boolean`,
-    required_error: `${startCase(property.label ?? property.id)} is required!`,
+    invalid_type_error: `${property.label ??
+      startCase(property.id)} should be a boolean`,
+    required_error: `${property.label ?? startCase(property.id)} is required!`,
   });
 
   if (property?.readOnly) return zod.readonly();
@@ -166,7 +189,13 @@ export const generateDefaultValues = (
 
   filterNonReactiveProperties(schema.properties).forEach(property => {
     if (property?.default) {
-      set(defvals, property.id, property.default);
+      set(
+        defvals,
+        property.id,
+        property.type === 'string-array'
+          ? property?.default ?? ([] as string[])
+          : property.default
+      );
     }
   });
   return defvals;

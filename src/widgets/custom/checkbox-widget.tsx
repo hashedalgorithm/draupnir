@@ -15,7 +15,7 @@ const CheckboxWidget: FC<TWidgetProps> = props => {
         className="w-4 h-4 accent-primary"
       />
       <Label className="font-normal">
-        {startCase(props.property?.label ?? props.property.id)}
+        {props.property?.label ?? startCase(props.property.id)}
       </Label>
     </div>
   );
