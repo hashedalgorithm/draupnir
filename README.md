@@ -1,4 +1,5 @@
 # Draupnir 🪄
+
 ![draupnir](https://github.com/hashedalgorithm/draupnir/assets/53309069/da55b4b6-0f06-4d3c-8ca3-0d718ef0ccef)
 
 Draupnir is a dynamic form generator for React applications, designed to streamline the process of creating forms based on JSON Schema. Unlike some existing libraries, Draupnir prioritizes flexibility and customization, empowering developers to tailor the form renderer to their specific needs.
@@ -11,13 +12,12 @@ Draupnir is a dynamic form generator for React applications, designed to streaml
 - **⚡ Built Upon React Hook Forms for Performance**: Leveraging React Hook Forms, Draupnir ensures optimal performance and efficiency in form rendering.
 - **🔒 Data Validations Using Zod**: Draupnir integrates Zod for robust data validations, ensuring data integrity and consistency.
 - **❗ Clear Error Messages**: Draupnir offers specific and clear error messages for various data validation scenarios, including minimum/maximum values, required fields, and improper data types. Developers can also provide custom error messages.
-  
+
 ### Limitations
 
 - **🚫 Single Condition per Field**: Draupnir currently supports applying only one condition per field, limiting the complexity of conditional rendering scenarios.
 
 **Table of Contents**
-
 
 ## Installation
 
@@ -34,45 +34,48 @@ yarn add draupnir
 ```
 
 ## Basic Usage
+
 Using Draupnir is straightforward. Simply provide your JSON Schema to the form generator, along with any customizations for the form renderer.
 
 ```typescript
 // Define your JSON Schema
 const schema = {
-  // Your Schema here 
+  // Your Schema here
 };
 
 // Initialize Widgets Object. This object contains the renderes.
 const widgets = {
   base: {
-  string: StringWidget,
-  // If you want use your own custom form components add this as needed
+    string: StringWidget,
+    // If you want use your own custom form components add this as needed
   },
   nonreactive: {},
   custom: {},
 };
 
 const handleOnSubmit = async (val: any) => {
-  console.log(val)
+  console.log(val);
   // your onsubmit logic here
-}
+};
 
 // Render the form
 const App = () => (
   <DraupnirRoot widgets={widgets}>
     <DraupnirProvider
-        schema={schema}
-        onSubmit={handleOnSubmit}
-        mode={'onChange'} // Controls when validations should run, onChange, onBlur, all, onSubmit
-        extendForm={
-          <>
-            // you can extend the form with form action button here.
-            <button type='submit'>Sumit</button>
-            <button type='button'>Cancel</button>
-          </>
-        }>
-          // you can extend children. This children will be outside the form context but it can access formState from draupnir context.
-          <FormSection />
+      schema={schema}
+      onSubmit={handleOnSubmit}
+      mode={'onChange'} // Controls when validations should run, onChange, onBlur, all, onSubmit
+      extendForm={
+        <>
+          // you can extend the form with form action button here.
+          <button type="submit">Sumit</button>
+          <button type="button">Cancel</button>
+        </>
+      }
+    >
+      // you can extend children. This children will be outside the form context
+      but it can access formState from draupnir context.
+      <FormSection />
     </DraupnirProvider>
   </DraupnirRoot>
 );
@@ -80,20 +83,18 @@ const App = () => (
 export default App;
 ```
 
-
 ```typescript
 const FormSection = () => {
   const { formState } = useDraupnirContext();
 
   //contains form values such as values, errors, isdirty etc
-  console.log(formState)
-  return(
-    <div>Form Section that contains input elements!</div>
-)
-}
+  console.log(formState);
+  return <div>Form Section that contains input elements!</div>;
+};
 ```
 
 ## Example Schema
+
 ```typescript
   const schema = {
     title: "Sample",
@@ -132,7 +133,7 @@ const FormSection = () => {
         view: {
           lg: 12,
           xl: 4,
-          xxl: 4, 
+          xxl: 4,
           wide: 4
         }
       },
@@ -199,16 +200,16 @@ type TSchema = {
 };
 ```
 
-- **title**: *Required.* A string representing the title of the schema.
+- **title**: _Required._ A string representing the title of the schema.
 - **version**: Optional. A string representing the version of the schema.
 - **readOnly**: Optional. Indicates whether the schema is read-only.
-- **properties**: *Required.* An object containing the properties of the schema. It is of type `TProperties`.
-- **conditions**: *Required.* An array containing conditions to be applied to the schema. It is of type `TCondition[]`.
+- **properties**: _Required._ An object containing the properties of the schema. It is of type `TProperties`.
+- **conditions**: _Required._ An array containing conditions to be applied to the schema. It is of type `TCondition[]`.
 
 These keys provide essential information and configuration options for defining a schema within Draupnir, ensuring flexibility and customization in form generation.
 
-
 ## TProperties
+
 - Represents the properties/field of a schema.
 - It is a recod of field configurations.
 
@@ -216,7 +217,8 @@ These keys provide essential information and configuration options for defining 
 
 The `TProperty` type represents a property/form field within a schema. Each property can have various configuration options that can alter behaviour, validations of that respective field:
 
-- **id**: *Required.* Unique identifier for the property and it also serves as the name. if you want to want have field inside deep levels then use dot notation here. eg. 'address.streetno' results data as
+- **id**: _Required._ Unique identifier for the property and it also serves as the name. if you want to want have field inside deep levels then use dot notation here. eg. 'address.streetno' results data as
+
 ```typescript
 ...
 properties: {
@@ -225,16 +227,17 @@ properties: {
   }
 }
 ```
-  
+
 ```typescript
 {
   address: {
-    streetno: 123
+    streetno: 123;
   }
 }
 ```
-- **id**: *Required.* A unique identifier for the property.
-- **type**: *Required.* Type of the property. It can be one of string literals: 'string', 'number', 'string-array' or 'boolean'.
+
+- **id**: _Required._ A unique identifier for the property.
+- **type**: _Required._ Type of the property. It can be one of string literals: 'string', 'number', 'string-array' or 'boolean'.
 - **widget**: Optional. Type of widget to be used for rendering the field (It can be one of literals: 'select', 'checkbox-group', 'checkbox', 'radio', 'email', 'url', 'datepicker', 'text', 'separator', 'heading').
 - **maximum**: Optional. Maximum value allowed for the property (applicable for number, string type).
 - **minimum**: Optional. Minimum value allowed for the property (applicable for number, string type).
@@ -247,8 +250,9 @@ properties: {
 - **default**: Optional. Default value for the field It can be one of types: 'string', 'number', 'string[]', or 'boolean'.
 - **pattern**: Optional. Regular expression pattern for validating the field value.
 - **view**: Optional. Configuration for the view of the property, including size settings for different breakpoints.
-  
+
 Screen Breakpoints
+
 ```typescript
   sm: { max: '600px' },
   md: { min: '601px', max: '767px' },
@@ -260,7 +264,8 @@ Screen Breakpoints
 
 It includes optional sizes for different breakpoints: 'sm', 'md', 'lg', 'xl', 'xxl', and 'wide'. The whole container is a grid of 12 columns and you can configure how much cols each field occupies here.
 
-Example: 
+Example:
+
 ```typescript
 {
   id: "fullname",
@@ -269,24 +274,26 @@ Example:
   view: {
     lg: 12,
     xl: 4,
-    xxl: 4, 
+    xxl: 4,
     wide: 4
   }
 }
 ```
+
 Default field span
 | Breakpoint | Default Span size |
 |------------|------|
-| sm         | 12   |
-| md         | 12   |
-| lg         | 12   |
-| xl         | 6    |
-| xxl        | 6    |
-| wide       | 6    |
-  
+| sm | 12 |
+| md | 12 |
+| lg | 12 |
+| xl | 6 |
+| xxl | 6 |
+| wide | 6 |
+
 - **disabled**: Optional. Indicates whether the field is disabled.
 - **enum**: Optional. Enumeration of possible values for the field. This is exclusive fields using widget for select, checkbox-group and radio.
-Enums
+  Enums
+
 ```typescript
   type TEnums = Array<TEnum | string>;
 
@@ -311,6 +318,7 @@ Enums
     ]
   }
 ```
+
 Note: It is Recommended to maintain uniformity by using either string or TEnum for your enum elements when there is conditions involved like select_injection.
 
 Refer the example in the start of documentation for more context. The example showcases the usage of the enums as string[] uniformly throughtout the conditions and properties section.
@@ -321,12 +329,96 @@ Refer the example in the start of documentation for more context. The example sh
 These keys provide comprehensive options for configuring fields within a schema, ensuring flexibility and customization in form generation.
 
 ## Field Type and Widget Type
-| Field Type | Widget Type | Renderer |
-|------------|--------|---------|
-| string     | NA   | Input |
 
+To achieve the desired behavior for form fields, it's essential to use the appropriate types with specific widgets as per the guidelines.By adhering to these recommendations and using the appropriate widget types for each property type, you can ensure that the form behaves as expected, providing a smooth and intuitive user experience.
+
+☑️ - This denotes this combition is supported
+❌ - This reults in not-supported/inconsistent behaviour
+🙅‍♂️ - This denotes the widget is still under work in progress
+😏 - This will work. but not recommended.
+
+### Field Type string
+
+| Widget Type    | Renderer                       |
+| -------------- | ------------------------------ |
+| NA             | Input ☑️                       |
+| select         | Select/Dropdown ☑️             |
+| checkbox       | Checkbox ❌                    |
+| checkbox-group | Checkbox Group                 |
+| radio          | Radio Group ☑️                 |
+| email          | Input with Email Validation ☑️ |
+| url            | Input with URL Validation ☑️   |
+| datepicker     | Datepicker 🙅‍♂️                  |
+| text           | TextArea ☑️                    |
+| separator      | Separator/Divider 😏           |
+| heading        | Heading 😏                     |
+
+### Field Type number
+
+| Widget Type    | Renderer                       |
+| -------------- | ------------------------------ |
+| NA             | Number Input ☑️                |
+| select         | Select/Dropdown ❌             |
+| checkbox       | Checbox ❌                     |
+| checkbox-group | Checkbox Group ❌              |
+| radio          | Radio Group ❌                 |
+| email          | Input with Email Validation ❌ |
+| url            | Input with URL Validation ❌   |
+| datepicker     | Datepicker ❌                  |
+| text           | TextArea ❌                    |
+| separator      | Separator/Divider 😏           |
+| heading        | Heading 😏                     |
+
+### Field Type boolean
+
+| Widget Type    | Renderer                       |
+| -------------- | ------------------------------ |
+| NA             | Switch ☑️                      |
+| select         | Select/Dropdown ❌             |
+| checkbox       | Checkbox ☑️                    |
+| checkbox-group | Checkbox Group ❌              |
+| radio          | Radio Group ❌                 |
+| email          | Input with Email Validation ❌ |
+| url            | Input with URL Validation ❌   |
+| datepicker     | Datepicker ❌                  |
+| text           | TextArea ❌                    |
+| separator      | Separator/Divider 😏           |
+| heading        | Heading 😏                     |
+
+### Field Type string-array
+
+| Widget Type    | Renderer                       |
+| -------------- | ------------------------------ |
+| NA             | React Fragment                 |
+| select         | Select/Dropdown ❌             |
+| checkbox       | Checkbox ❌                    |
+| checkbox-group | Checkbox Group ☑️              |
+| radio          | Radio Group ❌                 |
+| email          | Input with Email Validation ❌ |
+| url            | Input with URL Validation ❌   |
+| datepicker     | Datepicker ❌                  |
+| text           | TextArea ❌                    |
+| separator      | Separator/Divider 😏           |
+| heading        | Heading 😏                     |
+
+### Field Type none
+
+| Widget Type    | Renderer                       |
+| -------------- | ------------------------------ |
+| NA             | React Fragment                 |
+| select         | Select/Dropdown ❌             |
+| checkbox       | Checkbox ❌                    |
+| checkbox-group | Checkbox Group ❌              |
+| radio          | Radio Group ❌                 |
+| email          | Input with Email Validation ❌ |
+| url            | Input with URL Validation ❌   |
+| datepicker     | Datepicker ❌                  |
+| text           | TextArea ❌                    |
+| separator      | Separator/Divider ☑️           |
+| heading        | Heading ☑️                     |
 
 ## TCondition
+
 The `TCondition` type represents a condition to be applied to the field:
 
 ```typescript
@@ -356,30 +448,33 @@ type TCondition =
     };
 ```
 
-- **type**: *Required.* Specifies the type of condition. It can be one of:
-  - *'if'*: Specifies a condition to be met for certain actions to be taken.
-  - *'ifelse'*: Specifies a condition to be met for certain actions to be taken, with an alternative action if the condition is not met.
-  - *'select_injection'*: Specifies a condition for injecting options into a select widget based on a match.
-- **id**: *Required.* Unique identifier for the field to which the condition is applied.
-- **match**: *Required.* Value to match against in the condition. It can be a string, number, or boolean.
-- **operator**: *Required.* The operator to apply in the condition. It is of type `TConditionOperator`.
-- **then**: *Required.* Array of fieldIds to render if the condition is met.
+- **type**: _Required._ Specifies the type of condition. It can be one of:
+  - _'if'_: Specifies a condition to be met for certain actions to be taken.
+  - _'ifelse'_: Specifies a condition to be met for certain actions to be taken, with an alternative action if the condition is not met.
+  - _'select_injection'_: Specifies a condition for injecting options into a select widget based on a match.
+- **id**: _Required._ Unique identifier for the field to which the condition is applied.
+- **match**: _Required._ Value to match against in the condition. It can be a string, number, or boolean.
+- **operator**: _Required._ The operator to apply in the condition. It is of type `TConditionOperator`.
+- **then**: _Required._ Array of fieldIds to render if the condition is met.
 - **else**: Optional. Array of fieldIds to render if the condition is not met (applicable only for 'ifelse' type).
 - **enum**: Optional. Enum array of strings injected to target select if conditions are met. (Only applicable for type 'select_inject')
-- **mode**: *Required*. Mode of injection of enum to target select. (Only applicable for type 'select_inject')
+- **mode**: _Required_. Mode of injection of enum to target select. (Only applicable for type 'select_inject')
 
 These keys provide a flexible mechanism for defining conditional logic within schemas, enabling dynamic behavior based on specified conditions.
 
 ## TConditionOperator
+
 - Represents operators used in conditions.
 - It can be one of: 'greater', 'lesser', 'greater_or_equal', 'lesser_or_equal', 'equal', or 'not_equal'.
 
-
 ## Issues
+
 If you encounter any bugs or have suggestions for improvements, please [open an issue](https://github.com/hashedalgorithm/draupnir/issues).
 
 ## Contributing
+
 Contributions are welcome! Please refer to the [contribution guidelines](https://github.com/hashedalgorithm/draupnir/contributing) before getting started.
 
 ## License
+
 This project is licensed under the MIT License - see the LICENSE file for details.
