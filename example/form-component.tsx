@@ -1,9 +1,8 @@
 import React from 'react';
-import { useDraupnirContext } from '../dist';
+import { useDraupnirInstanceContext } from '../dist';
 
 const FormComponent = () => {
-  const formprops = useDraupnirContext();
-
+  const formprops = useDraupnirInstanceContext();
   console.log(formprops);
   return <div>FormComponent</div>;
 };

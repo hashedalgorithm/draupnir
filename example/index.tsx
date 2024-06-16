@@ -1,7 +1,7 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { DraupnirRoot, DraupnirProvider, TSchema } from '../dist';
+import { DraupnirRoot, DraupnirInstanceProvider, DraupnirForm, TSchema, useFormContext } from '../dist';
 import "./index.css"
 import FormComponent from './form-component';
 
@@ -90,7 +90,7 @@ const App = () => {
         view: {
           lg: 6,
           xl: 4,
-          xxl: 4, 
+          xxl: 4,
           wide: 4
         }
       },
@@ -101,31 +101,34 @@ const App = () => {
         view: {
           lg: 6,
           xl: 4,
-          xxl: 4, 
+          xxl: 4,
           wide: 4
         }
       },
     },
   } satisfies TSchema;
 
-
   return (
-      <DraupnirRoot className='px-8 py-4'  
-        widgets={{
-          base: {
-          },
-          nonreactive: {},
-          custom: {},
-        }}
-      >
-      <DraupnirProvider mode='all' className='grid grid-cols-12 gap-4' schema={schema} onSubmit={(val) => { 
-        console.log(val, "onsubmit")
-      }} onChange={(val) => { console.log(val) }}>
-        <button type='submit'>submit</button>
+    <DraupnirRoot className='px-8 py-4'
+      widgets={{
+        base: {},
+        nonreactive: {},
+        custom: {},
+      }}
+    >
+      <DraupnirInstanceProvider mode='all' className='grid grid-cols-12 gap-4' schema={schema}>
+        <DraupnirForm
+          onSubmit={(val) => {
+            console.log(val, "onsubmit")
+          }}
+          schema={schema}
+        >
+          <button type='submit'>Submit</button>
+        </DraupnirForm>
         <FormComponent />
-      </DraupnirProvider>
-      </DraupnirRoot>
-      );
+      </DraupnirInstanceProvider>
+    </DraupnirRoot>
+  );
 };
 
 ReactDOM.render(<App />, document.getElementById('root'));

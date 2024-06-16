@@ -1,11 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, {
-  PropsWithChildren,
-  createContext,
-  useContext,
-  useMemo,
-} from 'react';
-import { UseFormReturn, useForm } from 'react-hook-form';
+import React, { PropsWithChildren, useMemo } from 'react';
+import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { z } from 'zod';
 import {
   createRequiredSchema,
@@ -21,15 +16,7 @@ type DraupnirProviderProps = PropsWithChildren<{
   defaultValues?: Record<string, any>;
 }>;
 
-type ProviderState = {
-  formProps: UseFormReturn | null;
-};
-
-const RawContext = createContext<ProviderState>({
-  formProps: null,
-});
-
-const useDraupnirInstanceContext = () => useContext(RawContext);
+const useDraupnirInstanceContext = () => useFormContext();
 
 const DraupnirInstanceProvider = ({
   schema,
@@ -51,11 +38,7 @@ const DraupnirInstanceProvider = ({
     mode: props.mode,
   });
 
-  return (
-    <RawContext.Provider value={{ formProps }}>
-      <>{children}</>
-    </RawContext.Provider>
-  );
+  return <FormProvider {...formProps}>{children}</FormProvider>;
 };
 
 export { DraupnirInstanceProvider, useDraupnirInstanceContext };

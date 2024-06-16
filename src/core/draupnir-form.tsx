@@ -1,7 +1,6 @@
 import React, { PropsWithChildren } from 'react';
-import { Form } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { TSchema } from '../types';
-import { useDraupnirInstanceContext } from './draupnir-instance-provider';
 import { FieldGenerator } from './field-generator';
 
 type DraupnirInstanceProps = PropsWithChildren<{
@@ -16,21 +15,17 @@ const DraupnirForm = ({
   className,
   schema,
 }: DraupnirInstanceProps) => {
-  const { formProps } = useDraupnirInstanceContext();
-
-  if (!formProps) return <></>;
+  const formProps = useFormContext();
 
   return (
-    <Form key={`draupnirform.${schema.title}.${schema.version}`} {...formProps}>
-      <form onSubmit={formProps.handleSubmit(onSubmit)} className={className}>
-        <FieldGenerator
-          key={`root.fieldgenerator.${schema.title.toLowerCase()}`}
-          properties={schema.properties}
-          conditions={schema.conditions}
-        />
-        {children}
-      </form>
-    </Form>
+    <form onSubmit={formProps.handleSubmit(onSubmit)} className={className}>
+      <FieldGenerator
+        key={`root.fieldgenerator.${schema.title.toLowerCase()}`}
+        properties={schema.properties}
+        conditions={schema.conditions}
+      />
+      {children}
+    </form>
   );
 };
 
