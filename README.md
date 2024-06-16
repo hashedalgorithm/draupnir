@@ -61,22 +61,21 @@ const handleOnSubmit = async (val: any) => {
 // Render the form
 const App = () => (
   <DraupnirRoot widgets={widgets}>
-    <DraupnirProvider
+    <DraupnirInstanceProvider
       schema={schema}
-      onSubmit={handleOnSubmit}
       mode={'onChange'} // Controls when validations should run, onChange, onBlur, all, onSubmit
-      extendForm={
-        <>
-          // you can extend the form with form action button here.
-          <button type="submit">Sumit</button>
-          <button type="button">Cancel</button>
-        </>
-      }
     >
-      // you can extend children. This children will be outside the form context
-      but it can access formState from draupnir context.
-      <FormSection />
-    </DraupnirProvider>
+      // you can have children. This children will be outside the <form> element context
+      <DraupnirForm schema={schema} onSubmit={handleOnSubmit}>
+          <>
+            // you can extend the form with form action button here. this is inside <form> element context
+            <button type="submit">Sumit</button>
+            <button type="button">Cancel</button>
+          </>
+      </DraupnirForm>
+      <FormSection /> // some other extra contents that needs to access formstate.
+    </DraupnirInstanceProvider>
+    // you can add any number of instances inside draupnir root and they all their respective formstates. If you want different widgets then wrap it under new DraupnirRoot providing the desired custom widgets.
   </DraupnirRoot>
 );
 
@@ -85,10 +84,15 @@ export default App;
 
 ```typescript
 const FormSection = () => {
-  const { formState } = useDraupnirContext();
+  const { formState } = useDraupnirInstanceContext();
 
-  //contains form values such as values, errors, isdirty etc
-  console.log(formState);
+  useEffect(() => {
+    const subscription = formProps.watch((value: Record<string, any>) => {
+      //do your thing with values
+      //contains form values such as values, errors, isdirty, formstate, fieldstate etc
+    });
+    return () => subscription.unsubscribe();
+  }, [formProps.watch]);
   return <div>Form Section that contains input elements!</div>;
 };
 ```
