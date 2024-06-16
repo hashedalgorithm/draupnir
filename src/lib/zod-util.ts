@@ -1,4 +1,4 @@
-import { startCase, set } from 'lodash';
+import { startCase, set, has, get } from 'lodash';
 import { z, AnyZodObject, ZodType } from 'zod';
 import { TProperties, TProperty, TSchema } from '../types';
 
@@ -184,17 +184,18 @@ export const generateDefaultValues = (
   schema: TSchema,
   defaultValues: Record<string, any>
 ) => {
-  if (defaultValues) return defaultValues;
   const defvals: Record<string, any> = {};
 
   filterNonReactiveProperties(schema.properties).forEach(property => {
-    if (property?.default) {
+    if (has(defaultValues, property.id)) {
+      set(defvals, property.id, get(defaultValues, property.id));
+    } else {
       set(
         defvals,
         property.id,
         property.type === 'string-array'
           ? property?.default ?? ([] as string[])
-          : property.default
+          : property?.default
       );
     }
   });
