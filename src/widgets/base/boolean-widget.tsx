@@ -18,7 +18,7 @@ const BooleanWidget: FC<TWidgetProps> = props => {
         htmlFor={props.property.id}
         aria-disabled={props.property?.disabled}
       >
-        {startCase(props.property?.label ?? props.property.id)}
+        {props.property?.label ?? startCase(props.property.id)}
       </Label>
     </div>
   );
