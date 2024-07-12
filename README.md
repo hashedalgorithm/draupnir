@@ -209,6 +209,7 @@ type TSchema = {
 - **readOnly**: Optional. Indicates whether the schema is read-only.
 - **properties**: _Required._ An object containing the properties of the schema. It is of type `TProperties`.
 - **conditions**: _Required._ An array containing conditions to be applied to the schema. It is of type `TCondition[]`.
+- **meta**: Optional. You can have property specific custom meta data and can access it in your custom widgets or logics. It is of type Record<string, string>`.
 
 These keys provide essential information and configuration options for defining a schema within Draupnir, ensuring flexibility and customization in form generation.
 
@@ -329,6 +330,17 @@ Refer the example in the start of documentation for more context. The example sh
 
 - **hlevel**: Optional. Exculsive field for field using heading widget. Specifies the heading level for heading widget. Possible values: `'h1'`, `'h2'`, `'h3'`, `'h4'`, `'h5'`, `'h6'`.
 - **step**: Optional. Exclusive for number inputs. Specifies the step value for numeric inputs.
+- **meta**: Optional. You can have property specific custom meta data and can access it in your custom widgets or logics.
+
+```typescript
+  {
+    meta: {
+      userId: 'USR-123',
+      accountId: 'ACC-456'
+    },
+    ...other properties
+  }
+```
 
 These keys provide comprehensive options for configuring fields within a schema, ensuring flexibility and customization in form generation.
 

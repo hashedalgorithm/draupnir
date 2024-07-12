@@ -4,6 +4,7 @@ export type TSchema = {
   readOnly?: boolean;
   properties: TProperties;
   conditions: TCondition[];
+  meta?: Record<string, string>;
 };
 
 export type TPropertyType =
@@ -56,6 +57,7 @@ export type TProperty = {
   enum?: TEnums;
   hlevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   step?: number;
+  meta?: Record<string, string>;
 };
 
 export type TEnums = Array<TEnum | string>;
