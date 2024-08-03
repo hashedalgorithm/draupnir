@@ -5,7 +5,9 @@ import { TWidgetProps } from '../../types';
 
 const LabelWidget: FC<TWidgetProps> = ({ property }) => (
   <FormLabel htmlFor={property.id}>
-    {property?.label ?? startCase(property.id)}
+    {`${property?.label ?? startCase(property.id)} ${
+      property.required ? '*' : ''
+    }`}
   </FormLabel>
 );
 
