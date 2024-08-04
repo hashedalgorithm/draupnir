@@ -1,5 +1,4 @@
 import { cva } from 'class-variance-authority';
-import { startCase } from 'lodash';
 import React, { FC, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import {
@@ -7,11 +6,11 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '../components/ui/form';
 import { cn } from '../lib/tw-util';
 import { TCondition, TEnum, TProperty, TWidgetProps } from '../types';
+import { LabelWidget } from '../widgets';
 import { useDraupnirRootContext } from './draupnir-root';
 
 type DraupnirNodeProps = {
@@ -303,9 +302,13 @@ const DraupnirNode = ({
                     property={property}
                   />
                 ) : (
-                  <FormLabel>
-                    {property?.label ?? startCase(property.id)}
-                  </FormLabel>
+                  <LabelWidget
+                    property={property}
+                    field={field}
+                    fieldState={fieldState}
+                    formState={formState}
+                    condition={condition}
+                  />
                 )}
               </>
             )}
