@@ -201,6 +201,8 @@ type TSchema = {
   readOnly?: boolean;
   properties: TProperties;
   conditions: TCondition[];
+  meta?: Record<string, string>;
+  catchAll?: boolean;
 };
 ```
 
@@ -210,6 +212,7 @@ type TSchema = {
 - **properties**: _Required._ An object containing the properties of the schema. It is of type `TProperties`.
 - **conditions**: _Required._ An array containing conditions to be applied to the schema. It is of type `TCondition[]`.
 - **meta**: Optional. You can have property specific custom meta data and can access it in your custom widgets or logics. It is of type Record<string, string>`.
+- **catchAll**: Optional. You can have catch all properties that you passing in custom children section in form by settting this flag to true. be default it is set to false`.
 
 These keys provide essential information and configuration options for defining a schema within Draupnir, ensuring flexibility and customization in form generation.
 
