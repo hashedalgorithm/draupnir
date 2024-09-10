@@ -5,6 +5,7 @@ export type TSchema = {
   properties: TProperties;
   conditions: TCondition[];
   meta?: Record<string, string>;
+  catchAll?: boolean;
 };
 
 export type TPropertyType =

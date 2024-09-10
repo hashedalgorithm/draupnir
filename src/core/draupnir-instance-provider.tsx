@@ -26,7 +26,7 @@ const DraupnirInstanceProvider = ({
 }: DraupnirProviderProps) => {
   const zodSchema = useMemo(
     () =>
-      createSchema(schema.properties).required(
+      createSchema(schema.properties, schema.catchAll ?? false).required(
         createRequiredSchema(schema.properties)
       ),
     [schema.properties]

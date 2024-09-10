@@ -2,7 +2,7 @@ import { startCase, set, has, get } from 'lodash';
 import { z, AnyZodObject, ZodType } from 'zod';
 import { TProperties, TProperty, TSchema } from '../types';
 
-export const createSchema = (properties: TProperties) => {
+export const createSchema = (properties: TProperties, catchAll: boolean) => {
   let masterSchema = z.object({} as Record<string, any>);
 
   filterNonReactiveProperties(properties).forEach(property => {
@@ -28,7 +28,9 @@ export const createSchema = (properties: TProperties) => {
     }
   });
 
-  return masterSchema;
+  return catchAll
+    ? masterSchema.catchall(z.union([z.string(), z.number(), z.boolean()]))
+    : masterSchema;
 };
 
 export const createNestedSchema = (
