@@ -259,6 +259,11 @@ properties: {
 - **pattern**: Optional. Regular expression pattern for validating the field value.
 - **view**: Optional. Configuration for the view of the property, including size settings for different breakpoints.
 
+Note
+If the minimum property is not specified and the required property is set to true, the field will automatically be validated with a minimum length of 1. This behavior applies exclusively to fields of string or string array types.
+
+In other words, when a string or string array is marked as required, the system will enforce that the field must contain at least one character or one element, respectively, unless a custom minimum value is explicitly provided.
+
 Screen Breakpoints
 
 ```typescript

@@ -100,9 +100,9 @@ export const addStringValidators = (property: TProperty) => {
       message: `Must be ${property.maximum} or low characters long `,
     });
 
-  if (property.minimum)
-    zod = zod.min(property.minimum, {
-      message: `Must be ${property.minimum} or more characters long`,
+  if (property?.minimum || property?.required)
+    zod = zod.min(property.minimum ?? 1, {
+      message: `Must be ${property.minimum ?? 1} or more characters long`,
     });
   return zod;
 };
@@ -124,9 +124,9 @@ export const addStringArrayValidators = (property: TProperty) => {
       message: `Must be ${property.maximum} or low items in the list`,
     });
 
-  if (property?.minimum)
-    zod = zod.min(property.minimum, {
-      message: `Must be ${property.minimum} or more items in the list`,
+  if (property?.minimum || property?.required)
+    zod = zod.min(property.minimum ?? 1, {
+      message: `Must be ${property.minimum ?? 1} or more items in the list`,
     });
   return zod;
 };
