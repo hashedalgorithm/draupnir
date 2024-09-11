@@ -98,6 +98,7 @@ const App = () => {
         id: "lname",
         type: "string",
         label: "Last Name",
+        visible: false,
         view: {
           lg: 6,
           xl: 4,

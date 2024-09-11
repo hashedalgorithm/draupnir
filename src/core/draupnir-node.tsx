@@ -267,7 +267,7 @@ const DraupnirNode = ({
     return property;
   }, [property.id, condition, values]);
 
-  if (!showNode) return <></>;
+  if (!showNode || property.visible === false) return <></>;
 
   if (property.type === 'none') return <Widget property={injectedProperty} />;
 

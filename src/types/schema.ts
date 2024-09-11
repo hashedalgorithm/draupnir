@@ -59,6 +59,7 @@ export type TProperty = {
   hlevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   step?: number;
   meta?: Record<string, string>;
+  visible?: boolean;
 };
 
 export type TEnums = Array<TEnum | string>;
