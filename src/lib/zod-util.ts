@@ -38,29 +38,23 @@ export const createNestedSchema = (
   propertyId: string,
   property: TProperty
 ): ZodType => {
-  const toplevel = propertyId.split('.').at(0);
+  const [toplevel, ...rest] = propertyId.split('.');
 
-  if (!toplevel) return root;
-
-  let master = root.shape?.[toplevel] ?? root;
-
-  if (propertyId.split('.').length === 1) {
-    master = master.extend({
-      [propertyId]: createLeafZod(property),
-    });
-  } else {
-    master = master.extend({
-      [toplevel]: createNestedSchema(
-        master.shape?.[toplevel] ?? master,
-        propertyId
-          .split('.')
-          .filter(i => i !== toplevel)
-          .join('.'),
-        property
-      ),
+  if (rest.length === 0) {
+    return root.extend({
+      [toplevel]: createLeafZod(property),
     });
   }
-  return master;
+
+  const existingSchema = root.shape?.[toplevel] ?? z.object({});
+
+  return root.extend({
+    [toplevel]: createNestedSchema(
+      existingSchema as AnyZodObject,
+      rest.join('.'),
+      property
+    ),
+  });
 };
 
 export const createLeafZod = (property: TProperty): z.ZodType<any> => {
