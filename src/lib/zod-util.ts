@@ -11,13 +11,16 @@ export const createSchema = (properties: TProperties, catchAll: boolean) => {
         [property.id]: createLeafZod(property),
       });
     } else {
-      const toplevel = property.id.split('.').at(0);
+      const [toplevel, ...rest] = property.id.split('.');
 
-      if (!toplevel) return;
+      if (rest.length === 0) {
+        return;
+      }
+      const existingSchema = masterSchema.shape?.[toplevel] ?? z.object({});
 
       masterSchema = masterSchema.extend({
         [toplevel]: createNestedSchema(
-          masterSchema.shape?.[toplevel] ?? masterSchema,
+          existingSchema,
           property.id
             .split('.')
             .filter(i => i !== toplevel)
