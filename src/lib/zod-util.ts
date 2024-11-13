@@ -1,6 +1,6 @@
-import { startCase, set, has, get } from 'lodash';
-import { z, AnyZodObject, ZodType } from 'zod';
-import { TProperties, TProperty, TSchema } from '../types';
+import { get, set, startCase } from 'lodash';
+import { AnyZodObject, z, ZodType } from 'zod';
+import { TProperties, TProperty, TPropertyType, TSchema } from '../types';
 
 export const createSchema = (properties: TProperties, catchAll: boolean) => {
   let masterSchema = z.object({} as Record<string, any>);
@@ -101,6 +101,7 @@ export const addStringValidators = (property: TProperty) => {
     zod = zod.min(property.minimum ?? 1, {
       message: `Must be ${property.minimum ?? 1} or more characters long`,
     });
+
   return zod;
 };
 
@@ -186,19 +187,43 @@ export const generateDefaultValues = (
   const defvals: Record<string, any> = {};
 
   filterNonReactiveProperties(schema.properties).forEach(property => {
-    if (has(defaultValues, property.id)) {
-      set(defvals, property.id, get(defaultValues, property.id));
-    } else {
-      set(
-        defvals,
-        property.id,
-        property.type === 'string-array'
-          ? property?.default ?? ([] as string[])
-          : property?.default
-      );
-    }
+    set(
+      defvals,
+      property.id,
+      decideDefaultValue(
+        property.type,
+        property,
+        get(defaultValues, property.id)
+      )
+    );
   });
   return defvals;
+};
+
+export const decideDefaultValue = (
+  type: TPropertyType,
+  property: TProperty,
+  override?: TProperty['default']
+) => {
+  if (override) return override;
+  if (property?.default) return property?.default;
+
+  if (property?.minimum || property?.required) return property?.default;
+
+  switch (type) {
+    case 'string':
+      return '';
+    case 'boolean':
+      return false;
+    case 'none':
+      return undefined;
+    case 'number':
+      return 0;
+    case 'string-array':
+      return [];
+    default:
+      return undefined;
+  }
 };
 
 export const filterNonReactiveProperties = (properties: TProperties) =>
