@@ -48,7 +48,6 @@ const App = () => {
         id: 'details.address.streeno',
         type: 'string',
         placeholder: 'No.123',
-        required: true,
         label: "Streetno",
         minimum: 5,
         maximum: 10,
@@ -84,7 +83,6 @@ const App = () => {
         type: "string",
         minimum: 10,
         maximum: 20,
-        required: true,
         label: "First Name",
         errorText: "Enter valid firstname",
         view: {
@@ -98,7 +96,8 @@ const App = () => {
         id: "lname",
         type: "string",
         label: "Last Name",
-        visible: false,
+        default: "Last Name",
+        visible: true,
         view: {
           lg: 6,
           xl: 4,
@@ -117,7 +116,10 @@ const App = () => {
         custom: {},
       }}
     >
-      <DraupnirInstanceProvider mode='all' className='grid grid-cols-12 gap-4' schema={schema}>
+      <DraupnirInstanceProvider mode='all' className='grid grid-cols-12 gap-4' schema={schema} defaultValues={{
+        fname: "Sample",
+        // lname: "Test"
+      }}>
         <DraupnirForm
           onSubmit={(val) => {
             console.log(val, "onsubmit")

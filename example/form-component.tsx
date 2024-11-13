@@ -3,7 +3,7 @@ import { useDraupnirInstanceContext } from '../dist';
 
 const FormComponent = () => {
   const formprops = useDraupnirInstanceContext();
-  console.log(formprops);
+  console.log(formprops.getValues(), formprops.formState.defaultValues);
   return <div>FormComponent</div>;
 };
 
