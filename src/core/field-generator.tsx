@@ -1,6 +1,7 @@
 import React from 'react';
 import { TCondition, TProperties } from '../types/schema';
 import { FieldManager, WidgetManager } from './managers';
+import { sortPropertiesBasedOnPosition } from '../lib';
 
 type FieldGeneratorProps = {
   properties: TProperties;
@@ -18,21 +19,23 @@ const FieldGenerator = ({ properties, conditions }: FieldGeneratorProps) => {
   };
   return (
     <>
-      {Object.values(properties).map(property => {
-        return property?.widget ? (
-          <WidgetManager
-            key={`fieldgenerator.property.widgetmanager.${property.id}`}
-            property={property}
-            condition={checkIfPropertyIsInvolvedInCondition(property.id)}
-          />
-        ) : (
-          <FieldManager
-            key={`fieldgenerator.property.fieldmanager.${property.id}`}
-            property={property}
-            condition={checkIfPropertyIsInvolvedInCondition(property.id)}
-          />
-        );
-      })}
+      {Object.values(properties)
+        .sort(sortPropertiesBasedOnPosition)
+        .map(property => {
+          return property?.widget ? (
+            <WidgetManager
+              key={`fieldgenerator.property.widgetmanager.${property.id}`}
+              property={property}
+              condition={checkIfPropertyIsInvolvedInCondition(property.id)}
+            />
+          ) : (
+            <FieldManager
+              key={`fieldgenerator.property.fieldmanager.${property.id}`}
+              property={property}
+              condition={checkIfPropertyIsInvolvedInCondition(property.id)}
+            />
+          );
+        })}
     </>
   );
 };

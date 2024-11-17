@@ -233,3 +233,19 @@ export const filterNonReactiveProperties = (properties: TProperties) =>
       property?.widget !== 'separator' &&
       property?.widget !== 'heading'
   );
+
+export const sortPropertiesBasedOnPosition = (a: TProperty, b: TProperty) => {
+  if (a?.position !== undefined && b?.position !== undefined) {
+    return a.position - b.position;
+  }
+
+  if (a.position !== undefined) {
+    return -1;
+  }
+
+  if (b.position !== undefined) {
+    return 1;
+  }
+
+  return 0;
+};

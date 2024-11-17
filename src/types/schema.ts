@@ -60,6 +60,7 @@ export type TProperty = {
   step?: number;
   meta?: Record<string, string>;
   visible?: boolean;
+  position?: number;
 };
 
 export type TEnums = Array<TEnum | string>;
