@@ -1,7 +1,7 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { DraupnirRoot, DraupnirInstanceProvider, DraupnirForm, TSchema, useFormContext } from '../dist';
+import { DraupnirRoot, DraupnirInstanceProvider, DraupnirForm, TSchema, useFormContext, generateDefaultValues } from '../dist';
 import "./index.css"
 import FormComponent from './form-component';
 
@@ -41,6 +41,7 @@ const App = () => {
         placeholder: 'O +ve',
         required: true,
         label: "Blood Group",
+        position: 3,
         minimum: 5,
         maximum: 10,
       },
@@ -49,6 +50,7 @@ const App = () => {
         type: 'string',
         placeholder: 'No.123',
         label: "Streetno",
+        position: 3,
         minimum: 5,
         maximum: 10,
       },
@@ -57,6 +59,7 @@ const App = () => {
         type: 'string',
         maximum: 10,
         label: "Landmark",
+        position: 3,
         minimum: 5,
         placeholder: 'Near playground'
       },
@@ -74,6 +77,7 @@ const App = () => {
         id: 'details.currency.amount',
         type: 'number',
         minimum: 100,
+        
         maximum: 1000,
         label: 'Amount',
         placeholder: '100'
@@ -85,6 +89,7 @@ const App = () => {
         maximum: 20,
         label: "First Name",
         errorText: "Enter valid firstname",
+        position: 0,
         view: {
           lg: 6,
           xl: 4,
@@ -98,6 +103,7 @@ const App = () => {
         label: "Last Name",
         default: "Last Name",
         visible: true,
+        position: 1,
         view: {
           lg: 6,
           xl: 4,
@@ -108,6 +114,9 @@ const App = () => {
     },
   } satisfies TSchema;
 
+  // console.log(generateDefaultValues(schema, {
+  //   fname: "Sanjay"
+  // }))
   return (
     <DraupnirRoot className='px-8 py-4'
       widgets={{
@@ -117,8 +126,8 @@ const App = () => {
       }}
     >
       <DraupnirInstanceProvider mode='all' className='grid grid-cols-12 gap-4' schema={schema} defaultValues={{
-        fname: "Sample",
-        // lname: "Test"
+        fname: "Jansi",
+        lname: "Rani"
       }}>
         <DraupnirForm
           onSubmit={(val) => {
