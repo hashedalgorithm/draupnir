@@ -64,6 +64,7 @@ const App = () => (
     <DraupnirInstanceProvider
       schema={schema}
       mode={'onChange'} // Controls when validations should run, onChange, onBlur, all, onSubmit
+      defaultValues={{}} // Override your default Values
     >
       // you can have children. This children will be outside the <form> element context
       <DraupnirForm schema={schema} onSubmit={handleOnSubmit}>
@@ -258,6 +259,7 @@ properties: {
 - **default**: Optional. Default value for the field It can be one of types: 'string', 'number', 'string[]', or 'boolean'.
 - **pattern**: Optional. Regular expression pattern for validating the field value.
 - **view**: Optional. Configuration for the view of the property, including size settings for different breakpoints.
+- **position**: Optional. Defines the position of the property in the form (in terms of row).
 
 Note
 If the minimum property is not specified and the required property is set to true, the field will automatically be validated with a minimum length of 1. This behavior applies exclusively to fields of string or string array types.
