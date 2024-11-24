@@ -35,6 +35,22 @@ const App = () => {
       // }
     ],
     properties: {
+      heading: {
+    id: "heading",
+    type: "none",
+    widget: "heading",
+    label: "Booking Details",
+    hlevel: "h5",
+    position: 0,
+    view: {
+      lg: 12,
+      md: 12,
+      sm: 6,
+      wide: 12,
+      xl: 12,
+      xxl: 12,
+    },
+  },
       'details.blood': {
         id: 'details.blood',
         type: 'string',
@@ -101,7 +117,8 @@ const App = () => {
         id: "lname",
         type: "string",
         label: "Last Name",
-        default: "Last Name",
+        nullable: true,
+        default: null,
         visible: true,
         position: 1,
         view: {
@@ -125,11 +142,12 @@ const App = () => {
         custom: {},
       }}
     >
-      <DraupnirInstanceProvider mode='all' className='grid grid-cols-12 gap-4' schema={schema} defaultValues={{
+      <DraupnirInstanceProvider mode='all'  schema={schema} defaultValues={{
         fname: "Jansi",
-        lname: "Rani"
+        lname: null
       }}>
         <DraupnirForm
+          className='grid grid-cols-12 gap-4'
           onSubmit={(val) => {
             console.log(val, "onsubmit")
           }}
