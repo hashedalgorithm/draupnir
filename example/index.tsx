@@ -117,8 +117,6 @@ const App = () => {
         id: "lname",
         type: "string",
         label: "Last Name",
-        nullable: true,
-        default: null,
         visible: true,
         position: 1,
         view: {
