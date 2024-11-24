@@ -4,7 +4,7 @@ import { Label } from '../../components/ui/label';
 import { cva } from 'class-variance-authority';
 import { cn } from '../../lib/tw-util';
 
-const heading = cva('', {
+const heading = cva('col-span-full whitespace-nowrap', {
   variants: {
     level: {
       h1: 'h1',
