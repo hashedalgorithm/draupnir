@@ -1,3 +1,5 @@
+'use client';
+
 import React, { PropsWithChildren } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { TSchema } from '../types';

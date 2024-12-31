@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { TCondition, TProperties } from '../types/schema';
 import { FieldManager, WidgetManager } from './managers';

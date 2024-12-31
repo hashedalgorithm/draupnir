@@ -1,3 +1,5 @@
+'use client';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, { PropsWithChildren, useMemo } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';

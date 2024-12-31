@@ -1,3 +1,5 @@
+'use client';
+
 import { cva } from 'class-variance-authority';
 import React, { FC, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { FC } from 'react';
 import { TWidgetProps } from '../../types';
 import { Switch } from '../../components/ui/switch';

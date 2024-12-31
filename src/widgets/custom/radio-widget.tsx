@@ -1,3 +1,5 @@
+'use client';
+
 import React, { FC } from 'react';
 import { TWidgetProps } from '../../types';
 import { Label } from '../../components/ui/label';

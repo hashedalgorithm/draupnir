@@ -1,3 +1,5 @@
+'use client';
+
 import React, { PropsWithChildren, createContext, useContext } from 'react';
 import { TWidget } from '../types/widgets';
 import { cn } from '../lib/tw-util';

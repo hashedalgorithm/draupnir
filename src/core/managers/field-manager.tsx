@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { useDraupnirRootContext } from '../..';
 import DraupnirNode from '../draupnir-node';

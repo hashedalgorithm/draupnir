@@ -164,6 +164,7 @@
 // };
 
 // export default DatePickerWidget;
+'use client';
 
 import React, { FC } from 'react';
 import { TWidgetProps } from '../../types';

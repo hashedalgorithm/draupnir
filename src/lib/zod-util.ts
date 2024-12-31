@@ -1,3 +1,5 @@
+'use client';
+
 import { get, set, startCase } from 'lodash';
 import { AnyZodObject, z, ZodType } from 'zod';
 import { TProperties, TProperty, TPropertyType, TSchema } from '../types';

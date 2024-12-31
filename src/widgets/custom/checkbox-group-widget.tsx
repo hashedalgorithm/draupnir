@@ -1,3 +1,5 @@
+'use client';
+
 import { startCase } from 'lodash';
 import React, { FC, FormEventHandler, useMemo } from 'react';
 import { Label } from '../../components/ui/label';
