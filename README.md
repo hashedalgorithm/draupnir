@@ -12,6 +12,7 @@ Draupnir is a dynamic form generator for React applications, designed to streaml
 - **⚡ Built Upon React Hook Forms for Performance**: Leveraging React Hook Forms, Draupnir ensures optimal performance and efficiency in form rendering.
 - **🔒 Data Validations Using Zod**: Draupnir integrates Zod for robust data validations, ensuring data integrity and consistency.
 - **❗ Clear Error Messages**: Draupnir offers specific and clear error messages for various data validation scenarios, including minimum/maximum values, required fields, and improper data types. Developers can also provide custom error messages.
+- **🥳 Supports App Router(Nextjs 13 and above)**: It supports out of the box for Nextjs both pages and app router now. Every non interative component(lable, description etc) is a server component and reactive components are client components.
 
 ### Limitations
 
