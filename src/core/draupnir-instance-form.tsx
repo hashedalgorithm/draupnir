@@ -23,4 +23,4 @@ const DraupnirInstanceForm = ({
   );
 };
 
-export default DraupnirInstanceForm;
+export { DraupnirInstanceForm };

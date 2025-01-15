@@ -17,4 +17,4 @@ const DraupnirInstanceFormFields = ({
   );
 };
 
-export default DraupnirInstanceFormFields;
+export { DraupnirInstanceFormFields };
