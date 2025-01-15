@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 
 type DraupnirInstanceFormProps = PropsWithChildren<{
   onSubmit: (values: unknown) => Promise<void> | void;
-  onError: (errors: unknown) => Promise<void> | void;
+  onError?: (errors: unknown) => Promise<void> | void;
   className?: string;
 }>;
 const DraupnirInstanceForm = ({

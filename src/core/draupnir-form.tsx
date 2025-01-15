@@ -7,7 +7,7 @@ import { FieldGenerator } from './field-generator';
 
 type DraupnirInstanceProps = PropsWithChildren<{
   onSubmit: (values: unknown) => Promise<void> | void;
-  onError: (errors: unknown) => Promise<void> | void;
+  onError?: (errors: unknown) => Promise<void> | void;
   className?: string;
   schema: TSchema;
 }>;
