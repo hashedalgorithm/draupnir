@@ -99,6 +99,59 @@ const FormSection = () => {
 };
 ```
 
+## If you need more refine control
+
+## DraupnirInstanceForm
+
+The `DraupnirInstanceForm` component is a wrapper that provides the form context for the Draupnir form.
+
+### Props
+
+- **schema**: _Required._ The JSON schema that defines the structure of the form.
+- **onSubmit**: _Required._ A function to handle form submission.
+- **mode**: Optional. Controls when validations should run. Possible values are 'onChange', 'onBlur', 'all', 'onSubmit'. Default is 'onSubmit'.
+- **defaultValues**: Optional. An object to override the default values of the form fields.
+
+### Example
+
+```typescript
+const App = () => (
+  <DraupnirRoot widgets={widgets}>
+    <DraupnirInstanceProvider
+      schema={schema}
+      mode={'onChange'}
+      defaultValues={{}}
+    >
+      <DraupnirInstanceForm onSubmit={handleOnSubmit}>
+        <DraupnirInstanceFormField schema={schema} />
+        // your elements that needs to access form events.
+      </DraupnirInstanceForm>
+      <FormSection />
+    </DraupnirInstanceProvider>
+  </DraupnirRoot>
+);
+```
+
+If should either use `DraupnirForm` or `DraupnirInstanceForm` for one `DraupnirInstanceProvider`.
+
+## DraupnirInstanceFormField
+
+The `DraupnirInstanceFormField` component is used to render individual form fields based on the JSON schema. It automatically handles the rendering and validation of the field according to the schema definition.
+
+### Example
+
+```typescript
+const FormSection = () => {
+  return (
+    <div>
+      <DraupnirInstanceFormField schema={schema} /> // this renders your form //
+      you can basically call this anywhere inside boundary of
+      DraupnirInstanceForm. // i.e., more customization
+    </div>
+  );
+};
+```
+
 ## Example Schema
 
 ```typescript
