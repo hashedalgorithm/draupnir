@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, { PropsWithChildren, useMemo } from 'react';
 import {
+  FieldValues,
   FormProvider,
   useForm,
   useFormContext,
@@ -23,7 +24,8 @@ type DraupnirProviderProps = PropsWithChildren<
   } & Omit<UseFormProps, 'context' | 'resolver'>
 >;
 
-const useDraupnirInstanceContext = () => useFormContext();
+const useDraupnirInstanceContext = <T extends FieldValues>() =>
+  useFormContext<T>();
 
 const DraupnirInstanceProvider = ({
   schema,
