@@ -3,7 +3,7 @@
 import React, { FC } from 'react';
 import { TWidgetProps } from '../../types';
 import { Label } from '../../components/ui/label';
-import { startCase } from 'lodash';
+import { startCase } from 'lodash-es';
 
 const CheckboxWidget: FC<TWidgetProps> = props => {
   return (

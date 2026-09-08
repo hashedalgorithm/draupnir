@@ -3,6 +3,7 @@
 node_modules
 .cache
 dist
+src/generated
 example/.parcel-cache/data.mdb
 example/.parcel-cache/lock.mdb
 .parcel-cache/8e1817009022b7e1-AssetGraph-0
@@ -18,3 +19,4 @@ example/.parcel-cache/lock.mdb
 .parcel-cache/requestGraph-nodes-3-e1d78a3073793906-0
 .parcel-cache/snapshot-18f6ddb596281f82.txt
 .parcel-cache/snapshot-e1d78a3073793906.txt
+yarn.lock

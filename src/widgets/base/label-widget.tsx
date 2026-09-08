@@ -1,4 +1,4 @@
-import { startCase } from 'lodash';
+import { startCase } from 'lodash-es';
 import React, { FC } from 'react';
 import { FormLabel } from '../../components/ui/form';
 import { TWidgetProps } from '../../types';

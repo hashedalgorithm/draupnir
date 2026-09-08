@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from '../../components/ui/select';
 import { TWidgetProps } from '../../types';
-import { startCase } from 'lodash';
+import { startCase } from 'lodash-es';
 
 const SelectWidget: FC<TWidgetProps> = props => {
   return (

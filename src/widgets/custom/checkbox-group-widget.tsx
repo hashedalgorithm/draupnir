@@ -1,6 +1,6 @@
 'use client';
 
-import { startCase } from 'lodash';
+import { startCase } from 'lodash-es';
 import React, { FC, FormEventHandler, useMemo } from 'react';
 import { Label } from '../../components/ui/label';
 import { TWidgetProps } from '../../types';

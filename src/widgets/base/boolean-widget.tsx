@@ -5,7 +5,7 @@ import { TWidgetProps } from '../../types';
 import { Switch } from '../../components/ui/switch';
 import { Label } from '../../components/ui/label';
 import { cn } from '../../lib/tw-util';
-import { startCase } from 'lodash';
+import { startCase } from 'lodash-es';
 
 const BooleanWidget: FC<TWidgetProps> = props => {
   return (

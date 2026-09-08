@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useDraupnirRootContext } from '../..';
+import { useDraupnirRootContext } from '../draupnir-root';
 import DraupnirNode from '../draupnir-node';
 import UnknownDraupnirNode from '../unknown-draupnir-node';
 import { TWidgetProps } from '../../types/widgets';
